@@ -12,17 +12,8 @@ const menuData = [
   {
     titulo: "BPEA - ANIMAIS",
     paginas: [
-      { nome: "Manipulação e Contenção", path: "BPEA/contencao.html" },
-      { nome: "Cuidados", path: "BPEA/cuidado.html" },
-      { nome: "Volumes e Injeção", path: "BPEA/volumes_injecao.html" }
-    ]
-  },
-  {
-    titulo: "TÍTULO 4 — QUÍMICOS",
-    paginas: [
-      { nome: "Página 1", path: "CATEGORIA_3/pagina1.html" },
-      { nome: "Página 2", path: "CATEGORIA_3/pagina2.html" },
-      { nome: "Página 3", path: "CATEGORIA_3/pagina3.html" }
+      { nome: "Manipulação e Contenção", path: "BPEA/BPEA_manipulacao_animal.html" },
+      { nome: "Volumes e Injeção", path: "BPEA/BPEA_volumes_injecao.html" }
     ]
   }
 ];
