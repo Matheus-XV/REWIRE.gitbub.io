@@ -5,32 +5,172 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Sobre o Laboratório — LAB REWIRE</title>
 <link rel="stylesheet" href="css/style.css">
+<style>
+  :root{
+    --navy-950:#0A1F3D;
+    --navy-800:#123A6B;
+    --blue-700:#1B5DA6;
+    --blue-500:#2E7FD6;
+    --blue-300:#7FB1E8;
+    --blue-100:#EAF3FC;
+    --blue-050:#F5FAFF;
+    --white:#FFFFFF;
+    --ink:#12213B;
+    --ink-soft:#3F5673;
+    --line:#CBDDF2;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--white); color:var(--ink);
+    font-family:'Liberation Sans','Helvetica Neue',Arial,sans-serif;
+    line-height:1.55; font-size:16px;
+  }
+  h1,h2,h3,h4{
+    font-family:'Liberation Sans','Helvetica Neue',Arial,sans-serif;
+    font-weight:700; letter-spacing:-0.01em; color:var(--navy-950); margin:0;
+  }
+  .wrap{max-width:920px;margin:0 auto;padding:0 32px;}
+
+  /* ---------- CAPA ---------- */
+  .cover{
+    background:
+      radial-gradient(circle at 85% 12%, rgba(255,255,255,0.10), transparent 42%),
+      linear-gradient(165deg, var(--navy-950) 0%, var(--navy-800) 52%, var(--blue-700) 100%);
+    color:var(--white);
+    padding:88px 0 64px;
+    position:relative; overflow:hidden;
+  }
+  .cover::before{
+    content:""; position:absolute; right:-140px; top:-140px;
+    width:420px; height:420px; border-radius:50%;
+    border:1.5px solid rgba(255,255,255,0.14);
+  }
+  .cover::after{
+    content:""; position:absolute; right:-40px; top:120px;
+    width:260px; height:260px; border-radius:50%;
+    border:1.5px solid rgba(255,255,255,0.10);
+  }
+  .cover-inner{position:relative; z-index:1;}
+  .kicker{
+    display:flex; align-items:center; gap:10px;
+    font-size:13px; letter-spacing:.04em; color:var(--blue-300); margin-bottom:26px;
+  }
+  .kicker .dot{width:6px;height:6px;border-radius:50%;background:var(--blue-300);}
+  .cover h1{font-size:44px; font-weight:800; line-height:1.12; max-width:640px; color:var(--white);}
+  .cover .sigla{
+    display:inline-block; margin-top:18px; font-size:15px; font-weight:600;
+    color:var(--blue-100); border-left:3px solid var(--blue-300); padding-left:12px;
+  }
+  .cover p.desc{margin-top:26px; max-width:560px; font-size:16.5px; color:#D6E6F9; font-weight:400;}
+  .cover .motto{
+    margin-top:44px; padding-top:22px; border-top:1px solid rgba(255,255,255,0.18);
+    font-size:14px; font-style:italic; color:var(--blue-300);
+  }
+
+  /* ---------- SEÇÕES EM CARD ---------- */
+  .section-header{padding:48px 0 20px; display:flex; align-items:baseline; gap:14px;}
+  .section-header .idx{
+    font-family:'Liberation Sans',Arial,sans-serif; font-size:14px; font-weight:700;
+    color:var(--blue-500); border:1.5px solid var(--blue-300); border-radius:20px; padding:3px 12px;
+  }
+  .section-header h3{font-size:22px; font-weight:700; color:var(--navy-800);}
+  .technique{
+    margin:0 0 28px;
+    border:1px solid var(--line); border-radius:14px;
+    overflow:hidden; background:var(--white);
+  }
+  .technique-head{
+    background:linear-gradient(90deg, var(--navy-800), var(--blue-700));
+    color:var(--white); padding:16px 24px;
+    display:flex; align-items:center; justify-content:space-between; gap:16px;
+  }
+  .technique-head h4{color:var(--white); font-size:17px; font-weight:700;}
+  .technique-head .tag{
+    font-size:12px; font-weight:600; color:var(--blue-100);
+    background:rgba(255,255,255,0.14); border-radius:20px; padding:4px 12px; white-space:nowrap;
+  }
+  .tb-content{padding:22px 26px 24px;}
+  .tb-content p{margin:0 0 14px; font-size:15px; color:var(--ink);}
+  .tb-content p:last-child{margin-bottom:0;}
+  .tb-content ul{margin:0 0 14px; padding-left:22px;}
+  .tb-content ul:last-child{margin-bottom:0;}
+  .tb-content li{margin-bottom:8px; font-size:14.5px; color:var(--ink-soft);}
+  .tb-content li::marker{color:var(--blue-500);}
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    background:var(--navy-950); color:var(--blue-100);
+    padding:30px 0; margin-top:20px; font-size:13px;
+  }
+  footer .wrap{display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;}
+  footer .foot-motto{color:var(--blue-300); font-style:italic;}
+</style>
 </head>
 <body>
-    <!-- A mágica do menu acontece aqui -->
     <aside id="sidebar-menu"></aside>
 
-    <!-- O conteúdo da sua página fica aqui dentro -->
-    <main class="main-content">
-        <h1>Sobre o LAB REWIRE</h1>
-        
-        <h2>O Pesquisador Principal</h2>
-        <p>O laboratório é coordenado pelo Professor Victor Santos, Professor Associado de Neuroanatomia e Histologia do Departamento de Morfologia do Instituto de Ciências Biológicas (ICB) da UFMG. Ele possui formação em Fisiologia, doutorado pela USP de Ribeirão Preto, pós-doutorado em Neurociência pela Georgetown University e experiência internacional na University of Cincinnati.</p>
+  <!-- ===================== CAPA ===================== -->
+  <section class="cover">
+    <div class="wrap cover-inner">
+      <div class="kicker"><span class="dot"></span>SOBRE O LABORATÓRIO</div>
+      <h1>Sobre o LAB REWIRE</h1>
+      <div class="sigla">Neurofisiologia e Neurohistologia das Epilepsias — ICB/UFMG</div>
+      <p class="desc">Conheça o laboratório, suas linhas de pesquisa e o reconhecimento científico da equipe coordenada pelo Prof. Victor Santos.</p>
+      <div class="motto">"Neurons that FIRE together, (RE)WIRE together."</div>
+    </div>
+  </section>
 
-        <h2>Linhas de Pesquisa</h2>
+  <div class="wrap">
+    <div class="section-header">
+      <span class="idx">Sobre</span>
+      <h3>O laboratório</h3>
+    </div>
+
+    <div class="technique">
+      <div class="technique-head">
+        <h4>O Pesquisador Principal</h4>
+        <span class="tag">Coordenação</span>
+      </div>
+      <div class="tb-content">
+        <p>O laboratório é coordenado pelo Professor Victor Santos, Professor Associado de Neuroanatomia e Histologia do Departamento de Morfologia do Instituto de Ciências Biológicas (ICB) da UFMG. Ele possui formação em Fisiologia, doutorado pela USP de Ribeirão Preto, pós-doutorado em Neurociência pela Georgetown University e experiência internacional na University of Cincinnati.</p>
+      </div>
+    </div>
+
+    <div class="technique">
+      <div class="technique-head">
+        <h4>Linhas de Pesquisa</h4>
+        <span class="tag">Pesquisa</span>
+      </div>
+      <div class="tb-content">
         <p>Especialista em neurofisiologia e neurohistologia das epilepsias, o Prof. Victor investiga os mecanismos morfológicos, celulares e moleculares da epilepsia (com foco especial na epilepsia do lobo temporal) e de comorbidades neuropsiquiátricas.</p>
         <p>O foco do laboratório é integrar pesquisas básicas e translacionais através dos seguintes estudos:</p>
         <ul>
-            <li>Investigação da formação, estabilização e modulação de "engramas" de crises epilépticas e suas redes no cérebro.</li>
-            <li>Uso de modelos animais genéticos e farmacológicos, além de análises morfológicas de alta resolução, rotulagem neuronal dependente de atividade e abordagens comportamentais para identificar novos alvos terapêuticos.</li>
-            <li>Estudo dos efeitos do canabidiol e canabigerol em modelos de epilepsia em desenvolvimento e epilepsias refratárias.</li>
+          <li>Investigação da formação, estabilização e modulação de "engramas" de crises epilépticas e suas redes no cérebro.</li>
+          <li>Uso de modelos animais genéticos e farmacológicos, além de análises morfológicas de alta resolução, rotulagem neuronal dependente de atividade e abordagens comportamentais para identificar novos alvos terapêuticos.</li>
+          <li>Estudo dos efeitos do canabidiol e canabigerol em modelos de epilepsia em desenvolvimento e epilepsias refratárias.</li>
         </ul>
+      </div>
+    </div>
 
-        <h2>Reconhecimento e Fomento Científico</h2>
+    <div class="technique">
+      <div class="technique-head">
+        <h4>Reconhecimento e Fomento Científico</h4>
+        <span class="tag">Prêmios</span>
+      </div>
+      <div class="tb-content">
         <p>A excelência das pesquisas lideradas pelo Prof. Victor tem gerado grande destaque. A equipe acumula importantes prêmios e menções honrosas acadêmicas em simpósios de neurociência, distinções da UFMG, Prêmio de Melhor Trabalho Científico pela Liga Brasileira de Epilepsia (2016) e o prestigiado Capstone Grant (The Histochemical Society - 2023).</p>
-        
         <p>Recentemente, o Prof. Victor Santos foi um dos 15 jovens pesquisadores escolhidos (entre quase 200 propostas) pela <strong>1ª Chamada do Instituto D'Or Ciência Pioneira (IDOR)</strong> para pesquisadores em consolidação de carreira. O edital de ciência de fronteira destina recursos na ordem de R$ 7,2 milhões para pesquisas inovadoras na área de saúde ao longo de 3 anos, evidenciando a capacidade técnica e o potencial de impacto clínico-científico gerado pelo trabalho desenvolvido no ICB-UFMG.</p>
-    </main>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="wrap">
+      <span>LAB REWIRE · Sobre o Laboratório</span>
+      <span class="foot-motto">REWIRE LAB · FIRE LAB — UFMG</span>
+    </div>
+  </footer>
 
     <script src="shared/menu.js"></script>
 </body>

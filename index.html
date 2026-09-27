@@ -4,21 +4,147 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Página Inicial — LAB REWIRE</title>
-<!-- Caminho relativo da folha de estilos. Se sua pasta css estiver na raiz, use css/style.css -->
-<link rel="stylesheet" href="./css/style.css"> 
+<link rel="stylesheet" href="css/style.css">
+<style>
+  :root{
+    --navy-950:#0A1F3D;
+    --navy-800:#123A6B;
+    --blue-700:#1B5DA6;
+    --blue-500:#2E7FD6;
+    --blue-300:#7FB1E8;
+    --blue-100:#EAF3FC;
+    --blue-050:#F5FAFF;
+    --white:#FFFFFF;
+    --ink:#12213B;
+    --ink-soft:#3F5673;
+    --line:#CBDDF2;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--white); color:var(--ink);
+    font-family:'Liberation Sans','Helvetica Neue',Arial,sans-serif;
+    line-height:1.55; font-size:16px;
+  }
+  h1,h2,h3,h4{
+    font-family:'Liberation Sans','Helvetica Neue',Arial,sans-serif;
+    font-weight:700; letter-spacing:-0.01em; color:var(--navy-950); margin:0;
+  }
+  .wrap{max-width:1000px;margin:0 auto;padding:0 32px;}
+
+  /* ---------- CAPA ---------- */
+  .cover{
+    background:
+      radial-gradient(circle at 85% 12%, rgba(255,255,255,0.10), transparent 42%),
+      linear-gradient(165deg, var(--navy-950) 0%, var(--navy-800) 52%, var(--blue-700) 100%);
+    color:var(--white);
+    padding:88px 0 64px;
+    position:relative; overflow:hidden;
+  }
+  .cover::before{
+    content:""; position:absolute; right:-140px; top:-140px;
+    width:420px; height:420px; border-radius:50%;
+    border:1.5px solid rgba(255,255,255,0.14);
+  }
+  .cover::after{
+    content:""; position:absolute; right:-40px; top:120px;
+    width:260px; height:260px; border-radius:50%;
+    border:1.5px solid rgba(255,255,255,0.10);
+  }
+  .cover-inner{position:relative; z-index:1;}
+  .kicker{
+    display:flex; align-items:center; gap:10px;
+    font-size:13px; letter-spacing:.04em; color:var(--blue-300); margin-bottom:26px;
+  }
+  .kicker .dot{width:6px;height:6px;border-radius:50%;background:var(--blue-300);}
+  .cover h1{font-size:44px; font-weight:800; line-height:1.12; max-width:640px; color:var(--white);}
+  .cover .sigla{
+    display:inline-block; margin-top:18px; font-size:15px; font-weight:600;
+    color:var(--blue-100); border-left:3px solid var(--blue-300); padding-left:12px;
+  }
+  .cover p.desc{margin-top:26px; max-width:560px; font-size:16.5px; color:#D6E6F9; font-weight:400;}
+  .cover .motto{
+    margin-top:44px; padding-top:22px; border-top:1px solid rgba(255,255,255,0.18);
+    font-size:14px; font-style:italic; color:var(--blue-300);
+  }
+
+  /* ---------- SEÇÃO DE CARDs ---------- */
+  .section-header{padding:48px 0 20px; display:flex; align-items:baseline; gap:14px;}
+  .section-header .idx{
+    font-family:'Liberation Sans',Arial,sans-serif; font-size:14px; font-weight:700;
+    color:var(--blue-500); border:1.5px solid var(--blue-300); border-radius:20px; padding:3px 12px;
+  }
+  .section-header h3{font-size:22px; font-weight:700; color:var(--navy-800);}
+  .cards{display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:20px; margin:6px 0 56px;}
+  .card{
+    display:block; text-decoration:none;
+    border:1px solid var(--line); border-radius:14px;
+    background:var(--white); padding:24px;
+    transition:border-color .2s ease, box-shadow .2s ease, transform .2s ease;
+  }
+  .card:hover{border-color:var(--blue-500); box-shadow:0 8px 22px rgba(46,127,214,0.16); transform:translateY(-3px);}
+  .card .card-tag{
+    display:inline-block; font-size:11px; font-weight:700; color:var(--blue-700);
+    background:var(--blue-100); border-radius:20px; padding:3px 10px; margin-bottom:12px;
+    letter-spacing:.03em;
+  }
+  .card h4{font-size:17px; color:var(--navy-800); margin-bottom:8px;}
+  .card p{margin:0; font-size:14.5px; color:var(--ink-soft);}
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    background:var(--navy-950); color:var(--blue-100);
+    padding:30px 0; margin-top:20px; font-size:13px;
+  }
+  footer .wrap{display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;}
+  footer .foot-motto{color:var(--blue-300); font-style:italic;}
+</style>
 </head>
 <body>
-    <!-- A mágica do menu acontece aqui -->
     <aside id="sidebar-menu"></aside>
 
-    <!-- O conteúdo da sua página fica aqui dentro -->
-    <main class="main-content">
-        <h1>Bem-vindo ao LAB REWIRE</h1>
-        <p><strong>FIRE LAB — Universidade Federal de Minas Gerais (UFMG)</strong></p>
-        <p>Utilize o menu lateral para acessar os manuais técnicos, protocolos de Boas Práticas em Experimentação Animal (BPEA), e informações sobre o nosso laboratório.</p>
-    </main>
+  <!-- ===================== CAPA ===================== -->
+  <section class="cover">
+    <div class="wrap cover-inner">
+      <div class="kicker"><span class="dot"></span>BEM-VINDO · LAB REWIRE</div>
+      <h1>Bem-vindo ao LAB REWIRE</h1>
+      <div class="sigla">FIRE LAB — Universidade Federal de Minas Gerais (UFMG)</div>
+      <p class="desc">Utilize o menu lateral para acessar os manuais técnicos, protocolos de Boas Práticas em Experimentação Animal (BPEA), e informações sobre o nosso laboratório.</p>
+      <div class="motto">"Neurons that FIRE together, (RE)WIRE together."</div>
+    </div>
+  </section>
 
-    <!-- Script do menu. Estando na raiz, o caminho costuma ser "shared/menu.js" -->
-    <script src="./shared/menu.js"></script>
+  <div class="wrap">
+    <div class="section-header">
+      <span class="idx">Acesse</span>
+      <h3>Manuais e protocolos</h3>
+    </div>
+    <div class="cards">
+      <a class="card" href="BPEA/BPEA_manipulacao_animal.html">
+        <span class="card-tag">BPEA · ANIMAIS</span>
+        <h4>Manipulação e Contenção</h4>
+        <p>Técnicas padronizadas de transferência e contenção de camundongos em biotério e laboratório.</p>
+      </a>
+      <a class="card" href="BPEA/BPEA_volumes_injecao.html">
+        <span class="card-tag">BPEA · ANIMAIS</span>
+        <h4>Volumes e Injeção</h4>
+        <p>Volumes máximos recomendados, pH e calibre da agulha por via de administração em roedores.</p>
+      </a>
+      <a class="card" href="sobre.html">
+        <span class="card-tag">O LABORATÓRIO</span>
+        <h4>Sobre o Laboratório</h4>
+        <p>Linhas de pesquisa, reconhecimento científico e fomento do REWIRE LAB — ICB/UFMG.</p>
+      </a>
+    </div>
+  </div>
+
+  <footer>
+    <div class="wrap">
+      <span>LAB REWIRE — Página Inicial</span>
+      <span class="foot-motto">REWIRE LAB · FIRE LAB — UFMG</span>
+    </div>
+  </footer>
+
+    <script src="shared/menu.js"></script>
 </body>
 </html>
