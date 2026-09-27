@@ -37,7 +37,7 @@
     color:var(--navy-950);
     margin:0;
   }
-  .wrap{max-width:920px;margin:0 auto;padding:0 32px;}
+  .wrap{max-width:1400px;margin:0 auto;padding:0 32px;}
 
   /* ---------- CAPA ---------- */
   .cover{
@@ -223,6 +223,25 @@
   .divider{
     height:1px; background:var(--line); margin:0;
   }
+
+  /* ---------- BARRA DE NAVEGAÇÃO INFERIOR ---------- */
+  body{display:block; padding-bottom:92px;}
+  #sidebar-menu{
+    position:fixed; top:auto; left:0; right:0; bottom:0;
+    width:100%; height:auto;
+    display:flex; align-items:center; gap:32px;
+    padding:12px 24px;
+    overflow:visible;
+    border-right:none; border-top:1px solid #1a365d;
+    z-index:50;
+  }
+  #sidebar-menu .menu-secao{margin:0;}
+  #sidebar-menu .menu-titulo{
+    font-size:11px; margin:0 0 2px; padding:0;
+    border-bottom:none; letter-spacing:1px;
+  }
+  #sidebar-menu .menu-lista{display:flex; flex-wrap:wrap; gap:4px;}
+  #sidebar-menu .menu-lista a{font-size:13px; padding:5px 10px;}
 </style>
 </head>
 <body>
@@ -237,14 +256,6 @@
       <div class="sigla">Manipulação, Contenção e Bem-Estar Animal</div>
       <p class="desc">Guia de referência com técnicas padronizadas de manejo de camundongos em ambiente de biotério e laboratório, elaborado para orientar a execução segura, ética e reprodutível de procedimentos experimentais.</p>
       <div class="motto">"Neurons that FIRE together, (RE)WIRE together."</div>
-    </div>
-  </section>
-
-  <!-- ===================== CAPÍTULO I ===================== -->
-  <section class="chapter-header">
-    <div class="wrap">
-      <div class="chapter-eyebrow">CAPÍTULO I</div>
-      <h2>Manipulação e Contenção</h2>
     </div>
   </section>
 
@@ -409,7 +420,7 @@
 
   <footer>
     <div class="wrap">
-      <span>Manual BPEA · Capítulo I — Manipulação e Contenção</span>
+      <span>Manual BPEA · Manipulação e Contenção</span>
       <span class="foot-motto">REWIRE LAB · FIRE LAB — UFMG</span>
     </div>
   </footer>
