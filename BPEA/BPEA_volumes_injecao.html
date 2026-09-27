@@ -5,146 +5,335 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>BPEA — Volumes, pH e Calibre das Agulhas</title>
 <link rel="stylesheet" href="../css/style.css">
+<style>
+  :root{
+    --navy-950:#0A1F3D;
+    --navy-800:#123A6B;
+    --blue-700:#1B5DA6;
+    --blue-500:#2E7FD6;
+    --blue-300:#7FB1E8;
+    --blue-100:#EAF3FC;
+    --blue-050:#F5FAFF;
+    --white:#FFFFFF;
+    --ink:#12213B;
+    --ink-soft:#3F5673;
+    --line:#CBDDF2;
+    --step-line:#AECBEB;
+  }
+
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--white);
+    color:var(--ink);
+    font-family:'Liberation Sans','Helvetica Neue',Arial,sans-serif;
+    line-height:1.55;
+    font-size:16px;
+  }
+  h1,h2,h3,h4{
+    font-family:'Liberation Sans','Helvetica Neue',Arial,sans-serif;
+    font-weight:700;
+    letter-spacing:-0.01em;
+    color:var(--navy-950);
+    margin:0;
+  }
+  .wrap{max-width:1000px;margin:0 auto;padding:0 32px;}
+
+  /* ---------- CAPA ---------- */
+  .cover{
+    background:
+      radial-gradient(circle at 85% 12%, rgba(255,255,255,0.10), transparent 42%),
+      linear-gradient(165deg, var(--navy-950) 0%, var(--navy-800) 52%, var(--blue-700) 100%);
+    color:var(--white);
+    padding:64px 0 48px;
+    position:relative;
+    overflow:hidden;
+  }
+  .cover::before{
+    content:"";
+    position:absolute;
+    right:-140px; top:-140px;
+    width:420px; height:420px;
+    border-radius:50%;
+    border:1.5px solid rgba(255,255,255,0.14);
+  }
+  .cover::after{
+    content:"";
+    position:absolute;
+    right:-40px; top:120px;
+    width:260px; height:260px;
+    border-radius:50%;
+    border:1.5px solid rgba(255,255,255,0.10);
+  }
+  .cover-inner{position:relative; z-index:1;}
+  .kicker{
+    display:flex; align-items:center; gap:10px;
+    font-size:13px; letter-spacing:.04em; color:var(--blue-300);
+    margin-bottom:22px;
+  }
+  .kicker .dot{width:6px;height:6px;border-radius:50%;background:var(--blue-300);}
+  .cover h1{
+    font-size:34px; font-weight:800; line-height:1.16;
+    max-width:760px; color:var(--white);
+  }
+  .cover .sigla{
+    display:inline-block; margin-top:16px;
+    font-size:15px; font-weight:600; color:var(--blue-100);
+    border-left:3px solid var(--blue-300); padding-left:12px;
+  }
+  .cover .motto{
+    margin-top:32px; padding-top:20px; border-top:1px solid rgba(255,255,255,0.18);
+    font-size:14px; font-style:italic; color:var(--blue-300);
+  }
+
+  /* ---------- SECTION HEADER ---------- */
+  .section-header{
+    padding:40px 0 6px;
+    display:flex; align-items:baseline; gap:14px;
+  }
+  .section-header .idx{
+    font-family:'Liberation Sans',Arial,sans-serif;
+    font-size:14px; font-weight:700; color:var(--blue-500);
+    border:1.5px solid var(--blue-300); border-radius:20px;
+    padding:3px 12px;
+  }
+  .section-header h3{
+    font-size:22px; font-weight:700; color:var(--navy-800);
+  }
+
+  /* ---------- TABLE CARD (mesmo estilo dos cards "technique") ---------- */
+  .technique{
+    margin:26px 0 30px;
+    border:1px solid var(--line);
+    border-radius:14px;
+    overflow:hidden;
+    background:var(--white);
+  }
+  .technique-head{
+    background:linear-gradient(90deg, var(--navy-800), var(--blue-700));
+    color:var(--white);
+    padding:16px 24px;
+    display:flex; align-items:center; justify-content:space-between; gap:16px;
+  }
+  .technique-head h4{
+    color:var(--white); font-size:17px; font-weight:700;
+  }
+  .technique-head .tag{
+    font-size:12px; font-weight:600; color:var(--blue-100);
+    background:rgba(255,255,255,0.14);
+    border-radius:20px; padding:4px 12px; white-space:nowrap;
+  }
+  .tb-content{padding:22px 24px 26px;}
+
+  /* ---------- TABELA DE DADOS ---------- */
+  table.data{
+    width:100%;
+    border-collapse:collapse;
+    font-size:13.3px;
+  }
+  table.data th, table.data td{
+    border:1px solid var(--line);
+    padding:9px 10px;
+    text-align:center;
+  }
+  table.data thead th{
+    background:var(--navy-800);
+    color:var(--white);
+    font-weight:700;
+    font-size:12px;
+    letter-spacing:.02em;
+  }
+  table.data thead tr.sub th{
+    background:var(--blue-700);
+    font-weight:600;
+    font-size:11.3px;
+  }
+  table.data td.via{
+    text-align:left;
+    font-weight:700;
+    color:var(--navy-800);
+    background:var(--blue-050);
+    white-space:nowrap;
+  }
+  table.data td.ph{
+    font-weight:700;
+    color:var(--blue-700);
+    white-space:nowrap;
+  }
+  table.data tbody tr:nth-child(even) td:not(.via){
+    background:#FBFDFF;
+  }
+  table.data sup{
+    color:var(--blue-700);
+    font-weight:700;
+  }
+
+  /* ---------- NOTAS (mesmo estilo do box ATENÇÃO) ---------- */
+  .attention{
+    margin:0 0 24px;
+    border:1.5px solid var(--blue-700);
+    border-left:5px solid var(--navy-950);
+    background:var(--blue-050);
+    border-radius:8px;
+    padding:14px 18px;
+  }
+  .attention .a-head{
+    display:flex; align-items:center; gap:8px;
+    font-family:'Liberation Sans',Arial,sans-serif; font-size:13px; font-weight:800;
+    color:var(--navy-950); letter-spacing:.03em; margin-bottom:8px;
+  }
+  .attention .a-head svg{width:16px;height:16px;color:var(--navy-950);}
+  .attention p{margin:4px 0; font-size:13.5px; color:var(--ink-soft);}
+  .attention p b{color:var(--ink);}
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    background:var(--navy-950); color:var(--blue-100);
+    padding:30px 0; margin-top:20px;
+    font-size:13px;
+  }
+  footer .wrap{display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;}
+  footer .foot-motto{color:var(--blue-300); font-style:italic;}
+</style>
 </head>
 <body>
-    <!-- A mágica do menu acontece aqui -->
     <aside id="sidebar-menu"></aside>
 
-    <!-- O conteúdo da sua página fica aqui dentro -->
-    <main class="main-content">
-        <!-- ===================== CAPA ===================== -->
-        <section class="cover">
-            <div class="wrap cover-inner">
-                <div class="kicker"><span class="dot"></span>TABELA DE REFERÊNCIA · BPEA</div>
-                <h1>Volumes Máximos Recomendados, pH e Calibre da Agulha Segundo a Via de Administração em Roedores de Laboratório</h1>
-                <div class="sigla">Administração de Substâncias — Rato, Camundongo e Hamster</div>
-                <div class="motto">"Neurons that FIRE together, (RE)WIRE together."</div>
-            </div>
-        </section>
 
-        <div class="wrap">
-            <div class="section-header">
-                <span class="idx">Ref.</span>
-                <h3>Volumes, pH e Calibre da Agulha por Via de Administração</h3>
-            </div>
+  <!-- ===================== CAPA ===================== -->
+  <section class="cover">
+    <div class="wrap cover-inner">
+      <div class="kicker"><span class="dot"></span>TABELA DE REFERÊNCIA · BPEA</div>
+      <h1>Volumes Máximos Recomendados, pH e Calibre da Agulha Segundo a Via de Administração em Roedores de Laboratório</h1>
+      <div class="sigla">Administração de Substâncias — Rato, Camundongo e Hamster</div>
+      <div class="motto">"Neurons that FIRE together, (RE)WIRE together."</div>
+    </div>
+  </section>
 
-            <div class="technique">
-                <div class="technique-head">
-                    <h4>Volumes máximos recomendados, pH e calibre da agulha</h4>
-                    <span class="tag">Rato · Camundongo · Hamster</span>
-                </div>
-                <div class="tb-content">
-                    <table class="data">
-                        <thead>
-                            <tr>
-                                <th rowspan="2">Via de administração</th>
-                                <th rowspan="2">pH ideal</th>
-                                <th colspan="2">Rato</th>
-                                <th colspan="2">Camundongo</th>
-                                <th colspan="2">Hamster</th>
-                            </tr>
-                            <tr class="sub">
-                                <th>Volume máx. (mL)</th>
-                                <th>Calibre da agulha</th>
-                                <th>Volume máx. (mL)</th>
-                                <th>Calibre da agulha</th>
-                                <th>Volume máx. (mL)</th>
-                                <th>Calibre da agulha</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td class="via">Oral (gavagem)</td>
-                                <td class="ph">2,0 – 9,0</td>
-                                <td>3,0</td>
-                                <td>16 – 18 G</td>
-                                <td>0,5 – 1,0</td>
-                                <td>18 – 20 G</td>
-                                <td>1,5</td>
-                                <td>18 G</td>
-                            </tr>
-                            <tr>
-                                <td class="via">Subcutânea (SC)</td>
-                                <td class="ph">7,3 – 7,4</td>
-                                <td>5,0 – 10,0</td>
-                                <td>24 – 26 G</td>
-                                <td>2,0 – 3,0<sup>*</sup></td>
-                                <td>26 G</td>
-                                <td>3,0 – 4,0<sup>*</sup></td>
-                                <td>24 – 26 G</td>
-                            </tr>
-                            <tr>
-                                <td class="via">Intraperitoneal (IP)</td>
-                                <td class="ph">7,3 – 7,4</td>
-                                <td>5,0 – 10,0</td>
-                                <td>24 – 26 G</td>
-                                <td>2,0 – 3,0</td>
-                                <td>26 G</td>
-                                <td>3,0 – 4,0</td>
-                                <td>24 – 26 G</td>
-                            </tr>
-                            <tr>
-                                <td class="via">Intramuscular (IM)</td>
-                                <td class="ph">7,3 – 7,4</td>
-                                <td>0,3</td>
-                                <td>26 G</td>
-                                <td>0,05<sup>**</sup></td>
-                                <td>30 G</td>
-                                <td>0,1</td>
-                                <td>26 G</td>
-                            </tr>
-                            <tr>
-                                <td class="via">Intravenosa (IV)</td>
-                                <td class="ph">4,0 – 9,0</td>
-                                <td>0,5</td>
-                                <td>24 – 26 G</td>
-                                <td>0,2</td>
-                                <td>26 G</td>
-                                <td>0,3</td>
-                                <td>26 G</td>
-                            </tr>
-                            <tr>
-                                <td class="via">Intradérmica (ID)</td>
-                                <td class="ph">7,3 – 7,4</td>
-                                <td>0,05 – 0,1</td>
-                                <td>30 G</td>
-                                <td>0,05</td>
-                                <td>30 G</td>
-                                <td>0,05 – 0,1</td>
-                                <td>30 G</td>
-                            </tr>
-                            <tr>
-                                <td class="via">Intranasal (IN)</td>
-                                <td class="ph">7,3 – 7,4</td>
-                                <td>0,03 – 0,05</td>
-                                <td>–</td>
-                                <td>0,02</td>
-                                <td>–</td>
-                                <td>0,03 – 0,05</td>
-                                <td>–</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+  <div class="wrap">
 
-            <div class="attention">
-                <div class="a-head">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 9v4M12 17h.01M10.3 3.9L2.7 17a1.7 1.7 0 0 0 1.5 2.6h15.6a1.7 1.7 0 0 0 1.5-2.6L13.7 3.9a1.7 1.7 0 0 0-3.4 0Z"/></svg>
-                    AVISOS
-                </div>
-                <p><b>*</b> Dividir a dose em 2 a 4 locais de aplicação.</p>
-                <p><b>**</b> Recomendada apenas em situações específicas que exigem a via IM, devido à massa muscular insuficiente no camundongo.</p>
-            </div>
-        </div>
-    </main>
+    <div class="section-header">
+      <span class="idx">Ref.</span>
+      <h3>Volumes, pH e Calibre da Agulha por Via de Administração</h3>
+    </div>
 
-    <footer>
-        <div class="wrap">
-            <span>Manual BPEA · Tabela de Referência — Volumes, pH e Calibre da Agulha</span>
-            <span class="foot-motto">REWIRE LAB · FIRE LAB — UFMG</span>
-        </div>
-    </footer>
+    <div class="technique">
+      <div class="technique-head">
+        <h4>Volumes máximos recomendados, pH e calibre da agulha</h4>
+        <span class="tag">Rato · Camundongo · Hamster</span>
+      </div>
+      <div class="tb-content">
+        <table class="data">
+          <thead>
+            <tr>
+              <th rowspan="2">Via de administração</th>
+              <th rowspan="2">pH ideal</th>
+              <th colspan="2">Rato</th>
+              <th colspan="2">Camundongo</th>
+              <th colspan="2">Hamster</th>
+            </tr>
+            <tr class="sub">
+              <th>Volume máx. (mL)</th>
+              <th>Calibre da agulha</th>
+              <th>Volume máx. (mL)</th>
+              <th>Calibre da agulha</th>
+              <th>Volume máx. (mL)</th>
+              <th>Calibre da agulha</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="via">Oral (gavagem)</td>
+              <td class="ph">2,0 – 9,0</td>
+              <td>3,0</td>
+              <td>16 – 18 G</td>
+              <td>0,5 – 1,0</td>
+              <td>18 – 20 G</td>
+              <td>1,5</td>
+              <td>18 G</td>
+            </tr>
+            <tr>
+              <td class="via">Subcutânea (SC)</td>
+              <td class="ph">7,3 – 7,4</td>
+              <td>5,0 – 10,0</td>
+              <td>24 – 26 G</td>
+              <td>2,0 – 3,0<sup>*</sup></td>
+              <td>26 G</td>
+              <td>3,0 – 4,0<sup>*</sup></td>
+              <td>24 – 26 G</td>
+            </tr>
+            <tr>
+              <td class="via">Intraperitoneal (IP)</td>
+              <td class="ph">7,3 – 7,4</td>
+              <td>5,0 – 10,0</td>
+              <td>24 – 26 G</td>
+              <td>2,0 – 3,0</td>
+              <td>26 G</td>
+              <td>3,0 – 4,0</td>
+              <td>24 – 26 G</td>
+            </tr>
+            <tr>
+              <td class="via">Intramuscular (IM)</td>
+              <td class="ph">7,3 – 7,4</td>
+              <td>0,3</td>
+              <td>26 G</td>
+              <td>0,05<sup>**</sup></td>
+              <td>30 G</td>
+              <td>0,1</td>
+              <td>26 G</td>
+            </tr>
+            <tr>
+              <td class="via">Intravenosa (IV)</td>
+              <td class="ph">4,0 – 9,0</td>
+              <td>0,5</td>
+              <td>24 – 26 G</td>
+              <td>0,2</td>
+              <td>26 G</td>
+              <td>0,3</td>
+              <td>26 G</td>
+            </tr>
+            <tr>
+              <td class="via">Intradérmica (ID)</td>
+              <td class="ph">7,3 – 7,4</td>
+              <td>0,05 – 0,1</td>
+              <td>30 G</td>
+              <td>0,05</td>
+              <td>30 G</td>
+              <td>0,05 – 0,1</td>
+              <td>30 G</td>
+            </tr>
+            <tr>
+              <td class="via">Intranasal (IN)</td>
+              <td class="ph">7,3 – 7,4</td>
+              <td>0,03 – 0,05</td>
+              <td>–</td>
+              <td>0,02</td>
+              <td>–</td>
+              <td>0,03 – 0,05</td>
+              <td>–</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="attention">
+      <div class="a-head">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 9v4M12 17h.01M10.3 3.9L2.7 17a1.7 1.7 0 0 0 1.5 2.6h15.6a1.7 1.7 0 0 0 1.5-2.6L13.7 3.9a1.7 1.7 0 0 0-3.4 0Z"/></svg>
+        AVISOS
+      </div>
+      <p><b>*</b> Dividir a dose em 2 a 4 locais de aplicação.</p>
+      <p><b>**</b> Recomendada apenas em situações específicas que exigem a via IM, devido à massa muscular insuficiente no camundongo.</p>
+    </div>
+
+  </div>
+
+  <footer>
+    <div class="wrap">
+      <span>Manual BPEA · Tabela de Referência — Volumes, pH e Calibre da Agulha</span>
+      <span class="foot-motto">REWIRE LAB · FIRE LAB — UFMG</span>
+    </div>
+  </footer>
 
     <script src="../shared/menu.js"></script>
 </body>
