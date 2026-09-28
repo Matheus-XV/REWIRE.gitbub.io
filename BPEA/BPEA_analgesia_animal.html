@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BPEA — Analgesia Animal</title>
+<link rel="stylesheet" href="../css/style.css">
+<style>
+  :root{
+    --navy-950:#0A1F3D;
+    --navy-800:#123A6B;
+    --blue-700:#1B5DA6;
+    --blue-500:#2E7FD6;
+    --blue-300:#7FB1E8;
+    --blue-100:#EAF3FC;
+    --blue-050:#F5FAFF;
+    --white:#FFFFFF;
+    --ink:#12213B;
+    --ink-soft:#3F5673;
+    --line:#CBDDF2;
+    --step-line:#AECBEB;
+  }
+
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--white);
+    color:var(--ink);
+    font-family:'Liberation Sans','Helvetica Neue',Arial,sans-serif;
+    line-height:1.55;
+    font-size:16px;
+  }
+  h1,h2,h3,h4{
+    font-family:'Liberation Sans','Helvetica Neue',Arial,sans-serif;
+    font-weight:700;
+    letter-spacing:-0.01em;
+    color:var(--navy-950);
+    margin:0;
+  }
+  .wrap{max-width:1000px;margin:0 auto;padding:0 32px;}
+  .page{flex:1;min-width:0;display:flex;flex-direction:column;}
+  .page footer{margin-top:auto;}
+
+  /* ---------- CAPA ---------- */
+  .cover{
+    background:
+      radial-gradient(circle at 85% 12%, rgba(255,255,255,0.10), transparent 42%),
+      linear-gradient(165deg, var(--navy-950) 0%, var(--navy-800) 52%, var(--blue-700) 100%);
+    color:var(--white);
+    padding:64px 0 48px;
+    position:relative;
+    overflow:hidden;
+  }
+  .cover::before{
+    content:"";
+    position:absolute;
+    right:-140px; top:-140px;
+    width:420px; height:420px;
+    border-radius:50%;
+    border:1.5px solid rgba(255,255,255,0.14);
+  }
+  .cover::after{
+    content:"";
+    position:absolute;
+    right:-40px; top:120px;
+    width:260px; height:260px;
+    border-radius:50%;
+    border:1.5px solid rgba(255,255,255,0.10);
+  }
+  .cover-inner{position:relative; z-index:1;}
+  .kicker{
+    display:flex; align-items:center; gap:10px;
+    font-size:13px; letter-spacing:.04em; color:var(--blue-300);
+    margin-bottom:22px;
+  }
+  .kicker .dot{width:6px;height:6px;border-radius:50%;background:var(--blue-300);}
+  .cover h1{
+    font-size:34px; font-weight:800; line-height:1.16;
+    max-width:760px; color:var(--white);
+  }
+  .cover .sigla{
+    display:inline-block; margin-top:16px;
+    font-size:15px; font-weight:600; color:var(--blue-100);
+    border-left:3px solid var(--blue-300); padding-left:12px;
+  }
+  .cover .motto{
+    margin-top:32px; padding-top:20px; border-top:1px solid rgba(255,255,255,0.18);
+    font-size:14px; font-style:italic; color:var(--blue-300);
+  }
+
+  /* ---------- SECTION HEADER ---------- */
+  .section-header{
+    padding:40px 0 6px;
+    display:flex; align-items:baseline; gap:14px;
+  }
+  .section-header .idx{
+    font-family:'Liberation Sans',Arial,sans-serif;
+    font-size:14px; font-weight:700; color:var(--blue-500);
+    border:1.5px solid var(--blue-300); border-radius:20px;
+    padding:3px 12px;
+  }
+  .section-header h3{
+    font-size:22px; font-weight:700; color:var(--navy-800);
+  }
+
+  /* ---------- TABLE CARD ---------- */
+  .technique{
+    margin:26px 0 30px;
+    border:1px solid var(--line);
+    border-radius:14px;
+    overflow:hidden;
+    background:var(--white);
+  }
+  .technique-head{
+    background:linear-gradient(90deg, var(--navy-800), var(--blue-700));
+    color:var(--white);
+    padding:16px 24px;
+    display:flex; align-items:center; justify-content:space-between; gap:16px;
+  }
+  .technique-head h4{
+    color:var(--white); font-size:17px; font-weight:700;
+  }
+  .technique-head .tag{
+    font-size:12px; font-weight:600; color:var(--blue-100);
+    background:rgba(255,255,255,0.14);
+    border-radius:20px; padding:4px 12px; white-space:nowrap;
+  }
+  .tb-content{padding:22px 24px 26px;}
+
+  /* ---------- TABELA DE DADOS ---------- */
+  table.data{
+    width:100%;
+    border-collapse:collapse;
+    font-size:13.3px;
+  }
+  table.data th, table.data td{
+    border:1px solid var(--line);
+    padding:9px 10px;
+    text-align:center;
+  }
+  table.data thead th{
+    background:var(--navy-800);
+    color:var(--white);
+    font-weight:700;
+    font-size:12px;
+    letter-spacing:.02em;
+  }
+  table.data td.subst{
+    text-align:left;
+    font-weight:700;
+    color:var(--navy-800);
+    background:var(--blue-050);
+    white-space:nowrap;
+  }
+  table.data td.dose{
+    font-weight:700;
+    color:var(--blue-700);
+    white-space:nowrap;
+  }
+
+  /* ---------- NOTAS ---------- */
+  .attention{
+    margin:0 0 24px;
+    border:1.5px solid var(--blue-700);
+    border-left:5px solid var(--navy-950);
+    background:var(--blue-050);
+    border-radius:8px;
+    padding:14px 18px;
+  }
+  .attention .a-head{
+    display:flex; align-items:center; gap:8px;
+    font-family:'Liberation Sans',Arial,sans-serif; font-size:13px; font-weight:800;
+    color:var(--navy-950); letter-spacing:.03em; margin-bottom:8px;
+  }
+  .attention .a-head svg{width:16px;height:16px;color:var(--navy-950);}
+  .attention p{margin:4px 0; font-size:13.5px; color:var(--ink-soft);}
+  .attention p b{color:var(--ink);}
+
+  /* ---------- REFERÊNCIAS ---------- */
+  .refs p{margin:0 0 10px; font-size:13.5px; color:var(--ink-soft);}
+  .refs p:last-child{margin-bottom:0;}
+  .refs b{color:var(--ink);}
+  .refs a{color:var(--blue-700); word-break:break-all;}
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    background:var(--navy-950); color:var(--blue-100);
+    padding:30px 0; margin-top:20px;
+    font-size:13px;
+  }
+  footer .wrap{display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;}
+  footer .foot-motto{color:var(--blue-300); font-style:italic;}
+</style>
+</head>
+<body>
+    <aside id="sidebar-menu"></aside>
+
+  <main class="page">
+
+
+  <!-- ===================== CAPA ===================== -->
+  <section class="cover">
+    <div class="wrap cover-inner">
+      <div class="kicker"><span class="dot"></span>TABELA DE REFERÊNCIA · BPEA</div>
+      <h1>Doses Sugeridas de Analgésicos para Ratos, Camundongos e Hamsters</h1>
+      <div class="sigla">Analgesia Animal — Rato, Camundongo e Hamster</div>
+      <div class="motto">"Neurons that FIRE together, (RE)WIRE together."</div>
+    </div>
+  </section>
+
+  <div class="wrap">
+
+    <div class="section-header">
+      <span class="idx">Ref.</span>
+      <h3>Doses sugeridas de analgésicos por espécie</h3>
+    </div>
+
+    <!-- ===================== RATOS ===================== -->
+    <div class="technique">
+      <div class="technique-head">
+        <h4>Doses sugeridas de analgésicos para ratos</h4>
+        <span class="tag">Rato</span>
+      </div>
+      <div class="tb-content">
+        <table class="data">
+          <thead>
+            <tr>
+              <th>Substância</th>
+              <th>Dose (mg/kg)</th>
+              <th>Via de administração</th>
+              <th>Intervalo de dosagem</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td class="subst">Carprofeno</td><td class="dose">2 – 5</td><td>Subcutâneo</td><td>12 – 24h</td></tr>
+            <tr><td class="subst">Flunixina meglumina</td><td class="dose">1 – 2,5</td><td>Subcutâneo</td><td>12h</td></tr>
+            <tr><td class="subst" rowspan="2">Ibuprofeno</td><td class="dose">20</td><td>Oral</td><td>12h (máx. 72h)</td></tr>
+            <tr><td class="dose">0,2 mg/ml de água</td><td>Oral na água de bebida</td><td>Contínuo (máx. 72h)</td></tr>
+            <tr><td class="subst">Cetoprofeno</td><td class="dose">5</td><td>Subcutâneo</td><td>–</td></tr>
+            <tr><td class="subst">Meloxicam</td><td class="dose">1 – 2</td><td>Subcutâneo, Oral</td><td>12h</td></tr>
+            <tr><td class="subst" rowspan="2">Paracetamol</td><td class="dose">200 – 300</td><td>Oral</td><td>–</td></tr>
+            <tr><td class="dose">2 – 4,5 mg/ml de água</td><td>Oral na água de bebida</td><td>Contínuo</td></tr>
+            <tr><td class="subst" rowspan="3">Buprenorfina</td><td class="dose">0,05</td><td>Subcutâneo</td><td>4 – 6h</td></tr>
+            <tr><td class="dose">0,3 mg/ml (1 gota)</td><td>Oral</td><td>4 – 6h</td></tr>
+            <tr><td class="dose">0,5 (6 – 9 mg/litro de água)</td><td>Oral na água de bebida</td><td>Contínuo</td></tr>
+            <tr><td class="subst">Butorfanol</td><td class="dose">1 – 2</td><td>Subcutâneo</td><td>4h</td></tr>
+            <tr><td class="subst">Fentanil</td><td class="dose">0,03</td><td>Intravenoso</td><td>2h</td></tr>
+            <tr><td class="subst">Morfina</td><td class="dose">2,5 – 5</td><td>Subcutâneo, Intramuscular</td><td>4h</td></tr>
+            <tr><td class="subst">Petidina (Meperidina)</td><td class="dose">10 – 20</td><td>Subcutâneo, Intramuscular</td><td>2 – 3h</td></tr>
+            <tr><td class="subst">Piritramida</td><td class="dose">0,3</td><td>Subcutâneo</td><td>–</td></tr>
+            <tr><td class="subst" rowspan="2">Tramadol</td><td class="dose">0,5 mg/ml de água</td><td>Oral na água de bebida</td><td>Contínuo</td></tr>
+            <tr><td class="dose">5</td><td>Subcutâneo</td><td>Aprox. 2h</td></tr>
+            <tr><td class="subst">Cetamina</td><td class="dose">4</td><td>Intraperitoneal, Intramuscular</td><td>30 – 60min</td></tr>
+            <tr><td class="subst">Metamizol</td><td class="dose">100 – 250</td><td>Subcutâneo, Oral</td><td>6h</td></tr>
+            <tr><td class="subst" rowspan="2">Gabapentina</td><td class="dose">55</td><td>Oral</td><td>4h</td></tr>
+            <tr><td class="dose">100</td><td>Intraperitoneal</td><td>12h</td></tr>
+            <tr><td class="subst">Bupivacaína</td><td class="dose">1 – 2 (máx. 8)</td><td>Infiltração no tecido antes e depois da incisão; aspersão sobre a ferida ou mucosa</td><td>Início após 15min; duração 4 – 8h</td></tr>
+            <tr><td class="subst">Lidocaína</td><td class="dose">2 – 4 (máx. 7)</td><td>Infiltração no tecido antes e depois da incisão; aspersão sobre a ferida ou mucosa</td><td>Início após 5 – 10min; duração aprox. 30min</td></tr>
+            <tr><td class="subst">Ropivacaína</td><td class="dose">1 – 2 (máx. 8)</td><td>Subcutâneo, tecido (infiltração, aspersão)</td><td>Início após 15min; duração 4 – 8h</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ===================== CAMUNDONGOS ===================== -->
+    <div class="technique">
+      <div class="technique-head">
+        <h4>Doses sugeridas de analgésicos para camundongos</h4>
+        <span class="tag">Camundongo</span>
+      </div>
+      <div class="tb-content">
+        <table class="data">
+          <thead>
+            <tr>
+              <th>Substância</th>
+              <th>Dose (mg/kg)</th>
+              <th>Via de administração</th>
+              <th>Intervalo de dosagem</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td class="subst" rowspan="2">Carprofeno</td><td class="dose">5 – 20</td><td>Subcutâneo</td><td>12h</td></tr>
+            <tr><td class="dose">10 – 25</td><td>Oral na água de bebida</td><td>Contínuo</td></tr>
+            <tr><td class="subst">Flunixina meglumina</td><td class="dose">5</td><td>Subcutâneo</td><td>12h</td></tr>
+            <tr><td class="subst" rowspan="2">Meloxicam</td><td class="dose">2 – 5</td><td>Subcutâneo</td><td>6 – 12h</td></tr>
+            <tr><td class="dose">10 – 20</td><td>Oral</td><td>12h</td></tr>
+            <tr><td class="subst" rowspan="2">Paracetamol</td><td class="dose">200</td><td>Subcutâneo</td><td>2 – 4h</td></tr>
+            <tr><td class="dose">3,5 mg/ml de água</td><td>Oral na água de bebida</td><td>Contínuo</td></tr>
+            <tr><td class="subst" rowspan="2">Buprenorfina</td><td class="dose">0,1</td><td>Subcutâneo</td><td>4 – 6h</td></tr>
+            <tr><td class="dose">1</td><td>Oral na água de bebida</td><td>Contínuo</td></tr>
+            <tr><td class="subst">Buprenorfina + Meloxicam</td><td class="dose">0,1 + 5</td><td>Subcutâneo</td><td>≤ 12h</td></tr>
+            <tr><td class="subst">Buprenorfina + Carprofeno</td><td class="dose">0,1 + 5</td><td>Subcutâneo</td><td>≤ 12h</td></tr>
+            <tr><td class="subst" rowspan="2">Tramadol</td><td class="dose">0,1 – 1 mg/ml de água</td><td>Oral na água de bebida</td><td>Contínuo</td></tr>
+            <tr><td class="dose">25</td><td>Subcutâneo</td><td>Aprox. 2h</td></tr>
+            <tr><td class="subst">Tramadol + Paracetamol</td><td class="dose">1 mg + 3,5 mg em 1 ml de água</td><td>Oral na água de bebida</td><td>Contínuo</td></tr>
+            <tr><td class="subst">Bupivacaína</td><td class="dose">1 – 2 (máx. 8)</td><td>Infiltração no tecido antes e depois da incisão; aspersão sobre a ferida ou mucosa</td><td>Início após 15min; duração 4 – 8h</td></tr>
+            <tr><td class="subst">Lidocaína</td><td class="dose">2 – 4 (máx. 7)</td><td>Infiltração no tecido antes e depois da incisão; aspersão sobre a ferida ou mucosa</td><td>Início após 5 – 10min; duração aprox. 30min</td></tr>
+            <tr><td class="subst">Ropivacaína</td><td class="dose">1 – 2 (máx. 8)</td><td>Subcutâneo, tecido (infiltração, aspersão)</td><td>Início após 15min; duração 4 – 8h</td></tr>
+            <tr><td class="subst">Metamizol</td><td class="dose">1,25 mg/ml de água</td><td>Oral na água de bebida</td><td>Contínuo</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ===================== HAMSTERS ===================== -->
+    <div class="technique">
+      <div class="technique-head">
+        <h4>Doses sugeridas de analgésicos para hamsters</h4>
+        <span class="tag">Hamster</span>
+      </div>
+      <div class="tb-content">
+        <table class="data">
+          <thead>
+            <tr>
+              <th>Substância</th>
+              <th>Dose (mg/kg)</th>
+              <th>Via de administração</th>
+              <th>Intervalo de dosagem</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td class="subst">Ácido acetilsalicílico</td><td class="dose">240</td><td>Oral</td><td>24h</td></tr>
+            <tr><td class="subst">Carprofeno</td><td class="dose">5</td><td>Subcutâneo</td><td>24h</td></tr>
+            <tr><td class="subst">Flunixina meglumina</td><td class="dose">2,5</td><td>Subcutâneo</td><td>24h</td></tr>
+            <tr><td class="subst">Meloxicam</td><td class="dose">0,5</td><td>Oral</td><td>24h</td></tr>
+            <tr><td class="subst" rowspan="2">Paracetamol</td><td class="dose">200</td><td>Oral, Intraperitoneal</td><td>24h</td></tr>
+            <tr><td class="dose">1 – 2 mg/ml de água</td><td>Oral na água de bebida</td><td>Contínuo</td></tr>
+            <tr><td class="subst">Buprenorfina</td><td class="dose">0,05 – 0,1</td><td>Subcutâneo, Intraperitoneal</td><td>6 – 12h</td></tr>
+            <tr><td class="subst">Butorfanol</td><td class="dose">1 – 2</td><td>Subcutâneo</td><td>4 – 6h</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ===================== AVISOS ===================== -->
+    <div class="attention">
+      <div class="a-head">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 9v4M12 17h.01M10.3 3.9L2.7 17a1.7 1.7 0 0 0 1.5 2.6h15.6a1.7 1.7 0 0 0 1.5-2.6L13.7 3.9a1.7 1.7 0 0 0-3.4 0Z"/></svg>
+        OBSERVAÇÕES
+      </div>
+      <p>As doses dos analgésicos devem ser adaptadas à respectiva situação clínica e requisitos do protocolo experimental. Efeitos adversos e influências nos resultados dos experimentos devem ser pesquisados individualmente na literatura.</p>
+      <p><b>A resposta aos analgésicos pode ser influenciada por variações individuais e da linhagem, portanto, é essencial avaliar o efeito analgésico em cada indivíduo.</b></p>
+    </div>
+
+    <!-- ===================== REFERÊNCIAS ===================== -->
+    <div class="technique">
+      <div class="technique-head">
+        <h4>Referências</h4>
+        <span class="tag">Fonte</span>
+      </div>
+      <div class="tb-content refs">
+        <p>Arras M. et al. <b>Pain management for laboratory animals.</b> GV-SOLAS Committee for Anaesthesia in collaboration with Working Group 4 in the TVT. 2020. <a href="https://www.gv-solas.de/wp-content/uploads/2021/08/2021-04_Pain_Management_for_laboratory_animals.pdf" target="_blank" rel="noopener">https://www.gv-solas.de/wp-content/uploads/2021/08/2021-04_Pain_Management_for_laboratory_animals.pdf</a></p>
+        <p>Flecknell, Paul. <b>Laboratory animal anaesthesia.</b> Academic Press, 2015. DOI: 10.1016/C2013-0-13494-0</p>
+        <p>BPEA — Boas Práticas em Experimentação Animal (USP): <a href="https://sites.usp.br/bpeanimal/pagina-inicial/analgesia/" target="_blank" rel="noopener">sites.usp.br/bpeanimal/pagina-inicial/analgesia</a></p>
+      </div>
+    </div>
+
+  </div>
+
+  <footer>
+    <div class="wrap">
+      <span>Manual BPEA · Tabela de Referência — Analgesia Animal</span>
+      <span class="foot-motto">REWIRE LAB · FIRE LAB — UFMG</span>
+    </div>
+  </footer>
+  </main>
+
+    <script src="../shared/menu.js"></script>
+</body>
+</html>
