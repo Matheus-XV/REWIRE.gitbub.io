@@ -31,6 +31,8 @@
     font-weight:700; letter-spacing:-0.01em; color:var(--navy-950); margin:0;
   }
   .wrap{max-width:920px;margin:0 auto;padding:0 32px;}
+  .page{flex:1;min-width:0;display:flex;flex-direction:column;}
+  .page footer{margin-top:auto;}
 
   /* ---------- CAPA ---------- */
   .cover{
@@ -110,6 +112,7 @@
 <body>
     <aside id="sidebar-menu"></aside>
 
+  <main class="page">
   <!-- ===================== CAPA ===================== -->
   <section class="cover">
     <div class="wrap cover-inner">
@@ -171,6 +174,7 @@
       <span class="foot-motto">REWIRE LAB · FIRE LAB — UFMG</span>
     </div>
   </footer>
+  </main>
 
     <script src="shared/menu.js"></script>
 </body>

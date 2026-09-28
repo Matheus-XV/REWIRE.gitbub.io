@@ -31,6 +31,8 @@
     font-weight:700; letter-spacing:-0.01em; color:var(--navy-950); margin:0;
   }
   .wrap{max-width:1000px;margin:0 auto;padding:0 32px;}
+  .page{flex:1;min-width:0;display:flex;flex-direction:column;}
+  .page footer{margin-top:auto;}
 
   /* ---------- CAPA ---------- */
   .cover{
@@ -103,13 +105,14 @@
 <body>
     <aside id="sidebar-menu"></aside>
 
+  <main class="page">
   <!-- ===================== CAPA ===================== -->
   <section class="cover">
     <div class="wrap cover-inner">
       <div class="kicker"><span class="dot"></span>BEM-VINDO · LAB REWIRE</div>
       <h1>Bem-vindo ao LAB REWIRE</h1>
-      <div class="sigla">FIRE LAB — Universidade Federal de Minas Gerais (UFMG)</div>
-      <p class="desc">Utilize o menu lateral para acessar os manuais técnicos, protocolos de Boas Práticas em Experimentação Animal (BPEA), e informações sobre o nosso laboratório.</p>
+      <div class="sigla">Universidade Federal de Minas Gerais (UFMG)</div>
+      <p class="desc">Utilize o menu lateral para acessar os manuais técnicos, dados de base, protocolos experimentais e protocolos de Boas Práticas em Experimentação Animal (BPEA), e demais informações sobre o nosso laboratório.</p>
       <div class="motto">"Neurons that FIRE together, (RE)WIRE together."</div>
     </div>
   </section>
@@ -144,6 +147,7 @@
       <span class="foot-motto">REWIRE LAB · FIRE LAB — UFMG</span>
     </div>
   </footer>
+  </main>
 
     <script src="shared/menu.js"></script>
 </body>
