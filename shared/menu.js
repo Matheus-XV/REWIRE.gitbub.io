@@ -14,7 +14,8 @@ const menuData = [
     paginas: [
       { nome: "Manipulação e Contenção", path: "BPEA/BPEA_manipulacao_animal.html" },
       { nome: "Volumes e Injeção", path: "BPEA/BPEA_volumes_injecao.html" },
-      { nome: "Analgesia animal", path: "BPEA/BPEA_analgesia_animal.html" }
+      { nome: "Analgesia animal", path: "BPEA/BPEA_analgesia_animal.html" },
+      { nome: "Métodos de Aplicações", path: "BPEA/BPEA_metodos_aplicacoes.html" }
     ]
   }
 ];

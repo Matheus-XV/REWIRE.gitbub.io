@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Manual BPEA — Métodos de Aplicações em Camundongos</title>
+<link rel="stylesheet" href="../css/style.css">
+<style>
+  :root{
+    --navy-950:#0A1F3D;
+    --navy-800:#123A6B;
+    --blue-700:#1B5DA6;
+    --blue-500:#2E7FD6;
+    --blue-300:#7FB1E8;
+    --blue-100:#EAF3FC;
+    --blue-050:#F5FAFF;
+    --white:#FFFFFF;
+    --ink:#12213B;
+    --ink-soft:#3F5673;
+    --line:#CBDDF2;
+    --step-line:#AECBEB;
+  }
+
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--white);
+    color:var(--ink);
+    font-family:'Liberation Sans','Helvetica Neue',Arial,sans-serif;
+    line-height:1.55;
+    font-size:16px;
+  }
+  h1,h2,h3,h4{
+    font-family:'Liberation Sans','Helvetica Neue',Arial,sans-serif;
+    font-weight:700;
+    letter-spacing:-0.01em;
+    color:var(--navy-950);
+    margin:0;
+  }
+  .wrap{max-width:1400px;margin:0 auto;padding:0 32px;}
+  .page{flex:1;min-width:0;display:flex;flex-direction:column;}
+  .page footer{margin-top:auto;}
+
+  /* ---------- CAPA ---------- */
+  .cover{
+    background:
+      radial-gradient(circle at 85% 12%, rgba(255,255,255,0.10), transparent 42%),
+      linear-gradient(165deg, var(--navy-950) 0%, var(--navy-800) 52%, var(--blue-700) 100%);
+    color:var(--white);
+    padding:88px 0 64px;
+    position:relative;
+    overflow:hidden;
+  }
+  .cover::before{
+    content:"";
+    position:absolute;
+    right:-140px; top:-140px;
+    width:420px; height:420px;
+    border-radius:50%;
+    border:1.5px solid rgba(255,255,255,0.14);
+  }
+  .cover::after{
+    content:"";
+    position:absolute;
+    right:-40px; top:120px;
+    width:260px; height:260px;
+    border-radius:50%;
+    border:1.5px solid rgba(255,255,255,0.10);
+  }
+  .cover-inner{position:relative; z-index:1;}
+  .kicker{
+    display:flex; align-items:center; gap:10px;
+    font-size:13px; letter-spacing:.04em; color:var(--blue-300);
+    margin-bottom:26px;
+  }
+  .kicker .dot{width:6px;height:6px;border-radius:50%;background:var(--blue-300);}
+  .cover h1{
+    font-size:44px; font-weight:800; line-height:1.12;
+    max-width:640px; color:var(--white);
+  }
+  .cover .sigla{
+    display:inline-block; margin-top:18px;
+    font-size:15px; font-weight:600; color:var(--blue-100);
+    border-left:3px solid var(--blue-300); padding-left:12px;
+  }
+  .cover p.desc{
+    margin-top:26px; max-width:560px; font-size:16.5px;
+    color:#D6E6F9; font-weight:400;
+  }
+  .cover .motto{
+    margin-top:44px; padding-top:22px; border-top:1px solid rgba(255,255,255,0.18);
+    font-size:14px; font-style:italic; color:var(--blue-300);
+  }
+
+  /* ---------- SECTION HEADER ---------- */
+  .section-header{
+    padding:40px 0 6px;
+    display:flex; align-items:baseline; gap:14px;
+  }
+  .section-header .idx{
+    font-family:'Liberation Sans',Arial,sans-serif;
+    font-size:14px; font-weight:700; color:var(--blue-500);
+    border:1.5px solid var(--blue-300); border-radius:20px;
+    padding:3px 12px;
+  }
+  .section-header h3{
+    font-size:22px; font-weight:700; color:var(--navy-800);
+  }
+
+  /* ---------- TECHNIQUE CARD ---------- */
+  .technique{
+    margin:26px 0 48px;
+    border:1px solid var(--line);
+    border-radius:14px;
+    overflow:hidden;
+    background:var(--white);
+  }
+  .technique-head{
+    background:linear-gradient(90deg, var(--navy-800), var(--blue-700));
+    color:var(--white);
+    padding:16px 24px;
+    display:flex; align-items:center; justify-content:space-between; gap:16px;
+  }
+  .technique-head h4{
+    color:var(--white); font-size:17px; font-weight:700;
+  }
+  .technique-head .tag{
+    font-size:12px; font-weight:600; color:var(--blue-100);
+    background:rgba(255,255,255,0.14);
+    border-radius:20px; padding:4px 12px; white-space:nowrap;
+  }
+
+  .tb-content{padding:22px 26px 24px;}
+
+  .mat-label{
+    font-size:12px; font-weight:700; color:var(--blue-700);
+    letter-spacing:.03em; margin-bottom:10px;
+  }
+  .materials{
+    list-style:none; margin:0 0 20px; padding:0;
+    display:flex; flex-direction:column; gap:7px;
+  }
+  .materials li{
+    display:flex; align-items:center; gap:9px;
+    font-size:14.5px; color:var(--ink-soft);
+  }
+  .materials svg{flex:0 0 auto; width:17px; height:17px; color:var(--blue-500);}
+
+  .proc-label{
+    font-size:12px; font-weight:700; color:var(--blue-700);
+    letter-spacing:.03em; margin-bottom:12px;
+  }
+  .steps{list-style:none; margin:0; padding:0; position:relative;}
+  .steps li{
+    position:relative;
+    padding-left:34px; padding-bottom:16px;
+    font-size:14.5px; color:var(--ink);
+  }
+  .steps li:last-child{padding-bottom:0;}
+  .steps li::before{
+    content:attr(data-n);
+    position:absolute; left:0; top:0;
+    width:22px; height:22px; border-radius:50%;
+    background:var(--blue-100); color:var(--blue-700);
+    border:1.5px solid var(--blue-300);
+    font-family:'Liberation Sans',Arial,sans-serif; font-weight:700; font-size:12px;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .steps li::after{
+    content:"";
+    position:absolute; left:11px; top:23px; bottom:0;
+    width:1.5px; background:var(--step-line);
+  }
+  .steps li:last-child::after{display:none;}
+
+  .attention{
+    margin:0 26px 24px;
+    border:1.5px solid var(--blue-700);
+    border-left:5px solid var(--navy-950);
+    background:var(--blue-050);
+    border-radius:8px;
+    padding:14px 18px;
+  }
+  .attention .a-head{
+    display:flex; align-items:center; gap:8px;
+    font-family:'Liberation Sans',Arial,sans-serif; font-size:13px; font-weight:800;
+    color:var(--navy-950); letter-spacing:.03em; margin-bottom:6px;
+  }
+  .attention .a-head svg{width:16px;height:16px;color:var(--navy-950);}
+  .attention p{margin:4px 0; font-size:14px; color:var(--ink-soft);}
+
+  .ref-note{
+    margin:14px 26px 0 0; padding-top:12px;
+    border-top:1px solid var(--line);
+    font-size:12.5px; color:var(--ink-soft); font-style:italic;
+  }
+  .ref-note b{font-style:normal; color:var(--blue-700);}
+
+  .divider{
+    height:1px; background:var(--line); margin:0;
+  }
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    background:var(--navy-950); color:var(--blue-100);
+    padding:30px 0; margin-top:20px;
+    font-size:13px;
+  }
+  footer .wrap{display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;}
+  footer .foot-motto{color:var(--blue-300); font-style:italic;}
+</style>
+</head>
+<body>
+    <aside id="sidebar-menu"></aside>
+
+  <main class="page">
+
+
+  <!-- ===================== CAPA ===================== -->
+  <section class="cover">
+    <div class="wrap cover-inner">
+      <div class="kicker"><span class="dot"></span>MANUAL TÉCNICO ILUSTRADO</div>
+      <h1>Métodos de Aplicação de Substâncias em Camundongos</h1>
+      <div class="sigla">Vias de Administração — Camundongo</div>
+      <p class="desc">Guia de referência com as técnicas padronizadas de administração de substâncias em camundongos (gavagem, subcutânea, plexo retro-orbital, intraperitoneal, intranasal, intramuscular e intravenosa), elaborado para orientar a execução segura, ética e reprodutível de procedimentos experimentais.</p>
+      <div class="motto">"Neurons that FIRE together, (RE)WIRE together."</div>
+    </div>
+  </section>
+
+  <div class="wrap">
+
+    <div class="section-header">
+      <span class="idx">2.1</span>
+      <h3>Vias de Administração</h3>
+    </div>
+
+    <!-- ---- Técnica I: gavagem ---- -->
+    <div class="technique">
+      <div class="technique-head">
+        <h4>Técnica I — Via oral (gavagem)</h4>
+        <span class="tag">Aplicação</span>
+      </div>
+      <div class="tb-content">
+        <div class="mat-label">MATERIAIS</div>
+        <ul class="materials">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 11V6a2 2 0 0 1 4 0v5M11 11V4a2 2 0 0 1 4 0v7M15 11V6a2 2 0 0 1 4 0v9c0 3-2 6-6 6h-2c-3 0-5-1.5-6-4l-2-5a1.5 1.5 0 0 1 2.6-1.4L7 14"/></svg>Luvas descartáveis para procedimentos</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3l-3 2v16h14V5l-3-2M8 3l4 3 4-3M9 10h6"/></svg>Jaleco</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 4h10l-1 14a2 2 0 0 1-2 2h-4a2 2 0 0 1-2-2L7 4Z"/></svg>Cânula para gavagem rígida ou flexível compatível com o tamanho do animal (comprimento e calibre)</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 5l-9 9M14 4l6 6M5 19l2-2M8 16l2 2M12 12l-6 6H4v-2l6-6"/></svg>Seringa (1 a 3 ml)</li>
+        </ul>
+        <div class="proc-label">PROCEDIMENTO</div>
+        <ol class="steps">
+          <li data-n="1">A cânula a ser utilizada deverá ter o comprimento adequado ao tamanho do camundongo, considerando a distância a partir do canto da boca até a última costela do animal.</li>
+          <li data-n="2">Preencha a seringa com o volume de substância apropriado segundo a dosagem.</li>
+          <li data-n="3">Realize a imobilização manual do camundongo conforme descrito na Técnica I de contenção manual (página Manipulação e Contenção) e posicione-o com a cabeça voltada para cima. A cabeça deve estar totalmente imobilizada para o posicionamento adequado da cânula de gavagem.</li>
+          <li data-n="4">Realize a medida do tamanho da cânula pela distância da cavidade oral até o estômago do animal (aproximadamente na altura da cartilagem xifoide).</li>
+          <li data-n="5">Introduza a extremidade da cânula de gavagem na posição lateral da boca (desviando dos dentes incisivos) e deslize a cânula para o interior da cavidade oral, por cima da língua do animal, realizando um movimento delicado e contínuo.</li>
+          <li data-n="6">Aguarde até o animal deglutir. Quando posicionada corretamente, a cânula escorrega facilmente pelo esôfago do animal. Nunca usar força no procedimento, pois isso pode causar a ruptura do esôfago.</li>
+          <li data-n="7">Uma vez que a cânula estiver devidamente posicionada, administre lentamente a substância observando se não ocorre refluxo.</li>
+          <li data-n="8">Remova a cânula lentamente, seguindo a mesma curvatura na qual foi introduzida.</li>
+          <li data-n="9">Observe o animal quanto a qualquer dificuldade em respirar ou sangramento pela boca ou narinas por pelo menos 5 minutos antes de devolvê-lo à sala de alojamento no biotério.</li>
+        </ol>
+      </div>
+      <div class="attention">
+        <div class="a-head">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 9v4M12 17h.01M10.3 3.9L2.7 17a1.7 1.7 0 0 0 1.5 2.6h15.6a1.7 1.7 0 0 0 1.5-2.6L13.7 3.9a1.7 1.7 0 0 0-3.4 0Z"/></svg>
+          ATENÇÃO
+        </div>
+        <p>Apenas realizar a gavagem em animais contidos sem anestesia ou sedação, devido ao maior risco de aspiração (solução inadvertidamente entrar nos pulmões).</p>
+        <p>Caso ocorram soluços ou tosses pode ser indicativo que a cânula se encontra na traqueia do animal.</p>
+        <p>As agulhas de gavagem deverão ter a ponta arredondada para evitar lesões. De forma alternativa, poderá ser utilizada uma cânula flexível.</p>
+      </div>
+      <div class="ref-note"><b>Referência:</b> BOGDANSKE, John J. et al. Laboratory mouse procedural techniques: manual and DVD. CRC Press, 2010. DOI: 10.1201/9780429187940</div>
+    </div>
+
+    <!-- ---- Técnica II: SC pescoço ---- -->
+    <div class="technique">
+      <div class="technique-head">
+        <h4>Técnica II — Via subcutânea: região posterior do pescoço (entre as escápulas)</h4>
+        <span class="tag">Aplicação</span>
+      </div>
+      <div class="tb-content">
+        <div class="mat-label">MATERIAIS</div>
+        <ul class="materials">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 11V6a2 2 0 0 1 4 0v5M11 11V4a2 2 0 0 1 4 0v7M15 11V6a2 2 0 0 1 4 0v9c0 3-2 6-6 6h-2c-3 0-5-1.5-6-4l-2-5a1.5 1.5 0 0 1 2.6-1.4L7 14"/></svg>Luvas descartáveis para procedimentos</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3l-3 2v16h14V5l-3-2M8 3l4 3 4-3M9 10h6"/></svg>Jaleco</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 5l-9 9M14 4l6 6M5 19l2-2M8 16l2 2M12 12l-6 6H4v-2l6-6"/></svg>Seringa (1 a 3 ml)</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 3L5 17M7 15l2 2M3 21l4-2-2-4-2 6Z"/></svg>Agulha hipodérmica (calibre 24 a 30 G)</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 2h4v4l2 2v12a2 2 0 0 1-2 2h-4a2 2 0 0 1-2-2V8l2-2Z"/></svg>Álcool etílico 70%</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="5" width="14" height="14" rx="2"/><path d="M12 9v6M9 12h6"/></svg>Algodão ou gaze</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="7" width="16" height="13" rx="2"/><path d="M4 7l2-3h12l2 3M12 11v4M10 13h4"/></svg>Container para descarte de perfurocortantes</li>
+        </ul>
+        <div class="proc-label">PROCEDIMENTO</div>
+        <ol class="steps">
+          <li data-n="1">Preencha a seringa com o volume de substância apropriado segundo a dosagem.</li>
+          <li data-n="2">Realize a imobilização manual do camundongo conforme descrito na Técnica I de contenção manual.</li>
+          <li data-n="3">Posicione o camundongo em uma superfície antiderrapante e crie uma dobra de pele fazendo um movimento de pinça com o dedo polegar e indicador na região do pescoço, entre as escápulas do animal.</li>
+          <li data-n="4">Faça a antissepsia do local de administração com álcool etílico 70%.</li>
+          <li data-n="5">Insira a agulha na base da dobra de pele, com ângulo de aproximadamente 45 graus em relação ao corpo do animal.</li>
+          <li data-n="6">Puxe o embolo da seringa fazendo uma leve pressão negativa até observar um espaço de vácuo. Qualquer sinal de sangue no canhão da agulha é indicativo de posição incorreta.</li>
+          <li data-n="7">Empurre lentamente o embolo da seringa, em um movimento contínuo, até injetar o volume total da substância.</li>
+          <li data-n="8">Descarte a seringa e agulha em container apropriado para materiais perfurocortantes.</li>
+        </ol>
+      </div>
+      <div class="ref-note"><b>Referência:</b> BOGDANSKE, John J. et al. Laboratory mouse procedural techniques: manual and DVD. CRC Press, 2010. DOI: 10.1201/9780429187940</div>
+    </div>
+
+    <!-- ---- Técnica III: SC lombar ---- -->
+    <div class="technique">
+      <div class="technique-head">
+        <h4>Técnica III — Via subcutânea: região lombar ou flanco</h4>
+        <span class="tag">Aplicação</span>
+      </div>
+      <div class="tb-content">
+        <div class="mat-label">MATERIAIS</div>
+        <ul class="materials">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 11V6a2 2 0 0 1 4 0v5M11 11V4a2 2 0 0 1 4 0v7M15 11V6a2 2 0 0 1 4 0v9c0 3-2 6-6 6h-2c-3 0-5-1.5-6-4l-2-5a1.5 1.5 0 0 1 2.6-1.4L7 14"/></svg>Luvas descartáveis para procedimentos</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3l-3 2v16h14V5l-3-2M8 3l4 3 4-3M9 10h6"/></svg>Jaleco</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 5l-9 9M14 4l6 6M5 19l2-2M8 16l2 2M12 12l-6 6H4v-2l6-6"/></svg>Seringa (1 a 3 ml)</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 3L5 17M7 15l2 2M3 21l4-2-2-4-2 6Z"/></svg>Agulha hipodérmica (calibre 24 a 30 G)</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 2h4v4l2 2v12a2 2 0 0 1-2 2h-4a2 2 0 0 1-2-2V8l2-2Z"/></svg>Álcool etílico 70%</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="5" width="14" height="14" rx="2"/><path d="M12 9v6M9 12h6"/></svg>Algodão ou gaze</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="7" width="16" height="13" rx="2"/><path d="M4 7l2-3h12l2 3M12 11v4M10 13h4"/></svg>Container para descarte de perfurocortantes</li>
+        </ul>
+        <div class="proc-label">PROCEDIMENTO</div>
+        <ol class="steps">
+          <li data-n="1">Preencha a seringa com o volume de substância apropriado segundo a dosagem.</li>
+          <li data-n="2">Realize a imobilização manual do camundongo conforme descrito na Técnica I de contenção manual.</li>
+          <li data-n="3">Posicione o camundongo em uma superfície antiderrapante e crie uma dobra de pele fazendo um movimento de pinça com o dedo polegar e indicador na região lombar do animal.</li>
+          <li data-n="4">Faça a antissepsia do local de administração com álcool etílico 70%.</li>
+          <li data-n="5">Insira a agulha na base da dobra de pele, com ângulo de aproximadamente 45 graus em relação ao corpo do animal.</li>
+          <li data-n="6">Puxe o embolo da seringa fazendo uma leve pressão negativa até observar um espaço de vácuo. Qualquer sinal de sangue no canhão da agulha é indicativo de posição incorreta.</li>
+          <li data-n="7">Empurre lentamente o embolo da seringa, em um movimento contínuo, até injetar o volume total da substância.</li>
+          <li data-n="8">Descarte a seringa e agulha em container apropriado para materiais perfurocortantes.</li>
+        </ol>
+      </div>
+      <div class="ref-note"><b>Referência:</b> BOGDANSKE, John J. et al. Laboratory mouse procedural techniques: manual and DVD. CRC Press, 2010. DOI: 10.1201/9780429187940</div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- ---- Técnica IV: plexo retro-orbital ---- -->
+    <div class="technique">
+      <div class="technique-head">
+        <h4>Técnica IV — Via plexo retro-orbital</h4>
+        <span class="tag">Aplicação</span>
+      </div>
+      <div class="tb-content">
+        <div class="mat-label">MATERIAIS</div>
+        <ul class="materials">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 11V6a2 2 0 0 1 4 0v5M11 11V4a2 2 0 0 1 4 0v7M15 11V6a2 2 0 0 1 4 0v9c0 3-2 6-6 6h-2c-3 0-5-1.5-6-4l-2-5a1.5 1.5 0 0 1 2.6-1.4L7 14"/></svg>Luvas descartáveis para procedimentos</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3l-3 2v16h14V5l-3-2M8 3l4 3 4-3M9 10h6"/></svg>Jaleco</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 5l-9 9M14 4l6 6M5 19l2-2M8 16l2 2M12 12l-6 6H4v-2l6-6"/></svg>Seringa ultrafina de 0,3 ou 0,5 mL com agulha de 8×0,3 mm</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg>Solução oftálmica estéril com anestésico local (colírio anestésico)</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3s6 7 6 11a6 6 0 0 1-12 0c0-4 6-11 6-11Z"/></svg>Anestésico geral (preferencialmente inalatório)</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="5" width="14" height="14" rx="2"/><path d="M12 9v6M9 12h6"/></svg>Gaze</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="7" width="16" height="13" rx="2"/><path d="M4 7l2-3h12l2 3M12 11v4M10 13h4"/></svg>Container para descarte de perfurocortantes</li>
+        </ul>
+        <div class="proc-label">PROCEDIMENTO</div>
+        <ol class="steps">
+          <li data-n="1">Preencha a seringa com o volume de substância apropriado segundo a dosagem. O volume máximo permitido é 0,2 ml.</li>
+          <li data-n="2">Com o camundongo anestesiado, segure-o gentilmente pela pele do dorso promovendo uma leve protusão do globo ocular e posicione-o com a cabeça voltada para cima.</li>
+          <li data-n="3">Instile uma gota do colírio com anestésico local no olho do animal.</li>
+          <li data-n="4">Posicione o bisel da agulha no canto medial do olho, inserindo aproximadamente 3 mm da agulha gentilmente por baixo do globo ocular, com uma angulação entre 30 e 45 graus, até sentir o contato da ponta da agulha na cavidade orbital.</li>
+          <li data-n="5">Empurre lentamente o embolo da seringa, em movimento contínuo, até injetar o volume total da substância e retire a agulha. Não é necessário puxar o êmbolo da seringa antes da injeção.</li>
+          <li data-n="6">Quando necessário, realize a hemostasia mantendo as pálpebras fechadas por leve compressão com a gaze.</li>
+          <li data-n="7">Descarte a agulha e a seringa em container apropriado para materiais perfurocortantes.</li>
+        </ol>
+      </div>
+      <div class="attention">
+        <div class="a-head">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 9v4M12 17h.01M10.3 3.9L2.7 17a1.7 1.7 0 0 0 1.5 2.6h15.6a1.7 1.7 0 0 0 1.5-2.6L13.7 3.9a1.7 1.7 0 0 0-3.4 0Z"/></svg>
+          ATENÇÃO
+        </div>
+        <p>Essa técnica pode ser realizada somente com o animal anestesiado e por pessoas bem treinadas. Como alternativa pode ser substituída pela administração de substâncias pela veia lateral da cauda.</p>
+      </div>
+      <div class="ref-note"><b>Referência:</b> BOGDANSKE, John J. et al. Laboratory mouse procedural techniques: manual and DVD. CRC Press, 2010. DOI: 10.1201/9780429187940</div>
+    </div>
+
+    <!-- ---- Técnica V: intraperitoneal ---- -->
+    <div class="technique">
+      <div class="technique-head">
+        <h4>Técnica V — Via intraperitoneal</h4>
+        <span class="tag">Aplicação</span>
+      </div>
+      <div class="tb-content">
+        <div class="mat-label">MATERIAIS</div>
+        <ul class="materials">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 11V6a2 2 0 0 1 4 0v5M11 11V4a2 2 0 0 1 4 0v7M15 11V6a2 2 0 0 1 4 0v9c0 3-2 6-6 6h-2c-3 0-5-1.5-6-4l-2-5a1.5 1.5 0 0 1 2.6-1.4L7 14"/></svg>Luvas descartáveis para procedimentos</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3l-3 2v16h14V5l-3-2M8 3l4 3 4-3M9 10h6"/></svg>Jaleco</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 5l-9 9M14 4l6 6M5 19l2-2M8 16l2 2M12 12l-6 6H4v-2l6-6"/></svg>Seringa (1 a 3 ml)</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 3L5 17M7 15l2 2M3 21l4-2-2-4-2 6Z"/></svg>Agulha hipodérmica (calibre 24 a 30 G)</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 2h4v4l2 2v12a2 2 0 0 1-2 2h-4a2 2 0 0 1-2-2V8l2-2Z"/></svg>Álcool etílico 70%</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="5" width="14" height="14" rx="2"/><path d="M12 9v6M9 12h6"/></svg>Algodão ou gaze</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="7" width="16" height="13" rx="2"/><path d="M4 7l2-3h12l2 3M12 11v4M10 13h4"/></svg>Container para descarte de perfurocortantes</li>
+        </ul>
+        <div class="proc-label">PROCEDIMENTO</div>
+        <ol class="steps">
+          <li data-n="1">Preencha a seringa com o volume de substância apropriado segundo a dosagem.</li>
+          <li data-n="2">Realize a imobilização manual do camundongo conforme descrito na Técnica I de contenção manual.</li>
+          <li data-n="3">Posicione o camundongo com a cabeça levemente inclinada para baixo (essa manobra posicionará os intestinos cranialmente, ficando mais distante do local da injeção).</li>
+          <li data-n="4">Realize a antissepsia da área a ser administrada com álcool etílico 70%.</li>
+          <li data-n="5">Insira a agulha no quadrante inferior direito do abdômen do animal, com um ângulo de aproximadamente 30 graus em relação ao corpo do animal, até sentir que a agulha ultrapassou a parede abdominal.</li>
+          <li data-n="6">Certifique o correto posicionamento da agulha puxando o êmbolo da seringa fazendo uma leve pressão negativa até observar um espaço de vácuo (alternativamente levante a ponta da agulha em direção da parede abdominal e observe se não há resistência no movimento). Qualquer sinal de sangue ou fluido no canhão da agulha indica posicionamento incorreto. Caso ocorra, deve-se descartar o conjunto e utilizar novos instrumentos para evitar induzir peritonite.</li>
+          <li data-n="7">Administre a substância em um movimento contínuo empurrando lentamente o embolo da seringa até injetar o volume total.</li>
+          <li data-n="8">Descarte a seringa e agulha em container apropriado para materiais perfurocortantes.</li>
+        </ol>
+      </div>
+      <div class="ref-note"><b>Referência:</b> BOGDANSKE, John J. et al. Laboratory mouse procedural techniques: manual and DVD. CRC Press, 2010. DOI: 10.1201/9780429187940</div>
+    </div>
+
+    <!-- ---- Técnica VI: intranasal ---- -->
+    <div class="technique">
+      <div class="technique-head">
+        <h4>Técnica VI — Via intranasal</h4>
+        <span class="tag">Aplicação</span>
+      </div>
+      <div class="tb-content">
+        <div class="mat-label">MATERIAIS</div>
+        <ul class="materials">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 11V6a2 2 0 0 1 4 0v5M11 11V4a2 2 0 0 1 4 0v7M15 11V6a2 2 0 0 1 4 0v9c0 3-2 6-6 6h-2c-3 0-5-1.5-6-4l-2-5a1.5 1.5 0 0 1 2.6-1.4L7 14"/></svg>Luvas descartáveis para procedimentos</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3l-3 2v16h14V5l-3-2M8 3l4 3 4-3M9 10h6"/></svg>Jaleco</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="10" y="2" width="4" height="12" rx="2"/><path d="M12 14v8M9 22h6"/></svg>Pipeta de volume fixo ou regulável e ponteiras</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3s6 7 6 11a6 6 0 0 1-12 0c0-4 6-11 6-11Z"/></svg>Anestésico geral (preferencialmente inalatório)</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="7" width="16" height="13" rx="2"/><path d="M4 7l2-3h12l2 3M12 11v4M10 13h4"/></svg>Container para descarte de perfurocortantes</li>
+        </ul>
+        <div class="proc-label">PROCEDIMENTO</div>
+        <ol class="steps">
+          <li data-n="1">Aspire com a pipeta o volume máximo de 0,02 ml (volumes excessivos ou administração muito rápida podem sufocar o animal).</li>
+          <li data-n="2">Com o camundongo levemente anestesiado, segure gentilmente pela pele do dorso e posicione-o com a cabeça e narinas voltadas para cima.</li>
+          <li data-n="3">Posicione a extremidade da ponteira na porção externa da narina e administre de forma lenta e contínua até instilar o volume total da solução.</li>
+          <li data-n="4">Observe o padrão e frequência respiratória do animal e a recuperação da anestesia.</li>
+          <li data-n="5">Descarte a ponteira em container apropriado para materiais perfurocortantes.</li>
+        </ol>
+      </div>
+      <div class="ref-note"><b>Referência:</b> SHIMIZU, Shinya. Routes of administration. The laboratory mouse, p. 527-541, 2004. DOI: 10.1016/B978-012336425-8</div>
+    </div>
+
+    <!-- ---- Técnica VII: intramuscular ---- -->
+    <div class="technique">
+      <div class="technique-head">
+        <h4>Técnica VII — Via intramuscular</h4>
+        <span class="tag">Aplicação</span>
+      </div>
+      <div class="tb-content">
+        <div class="mat-label">MATERIAIS</div>
+        <ul class="materials">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 11V6a2 2 0 0 1 4 0v5M11 11V4a2 2 0 0 1 4 0v7M15 11V6a2 2 0 0 1 4 0v9c0 3-2 6-6 6h-2c-3 0-5-1.5-6-4l-2-5a1.5 1.5 0 0 1 2.6-1.4L7 14"/></svg>Luvas descartáveis para procedimentos</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3l-3 2v16h14V5l-3-2M8 3l4 3 4-3M9 10h6"/></svg>Jaleco</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 5l-9 9M14 4l6 6M5 19l2-2M8 16l2 2M12 12l-6 6H4v-2l6-6"/></svg>Seringa ultrafina de 0,3 ou 0,5 mL com agulha de 8×0,3 mm</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 2h4v4l2 2v12a2 2 0 0 1-2 2h-4a2 2 0 0 1-2-2V8l2-2Z"/></svg>Álcool etílico 70%</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="5" width="14" height="14" rx="2"/><path d="M12 9v6M9 12h6"/></svg>Algodão ou gaze</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="7" width="16" height="13" rx="2"/><path d="M4 7l2-3h12l2 3M12 11v4M10 13h4"/></svg>Container para descarte de perfurocortantes</li>
+        </ul>
+        <div class="proc-label">PROCEDIMENTO</div>
+        <ol class="steps">
+          <li data-n="1">Preencha a seringa com o volume de substância apropriado segundo a dosagem.</li>
+          <li data-n="2">Realize a imobilização manual do camundongo conforme descrito na Técnica I de contenção manual ou realize a imobilização do camundongo utilizando um tubo plástico conforme descrito na Técnica II de contenção (página Manipulação e Contenção).</li>
+          <li data-n="3">Com auxílio dos dedos imobilize um dos membros pélvicos do camundongo.</li>
+          <li data-n="4">Realize a antissepsia da área a ser administrada com álcool etílico 70%.</li>
+          <li data-n="5">Insira a agulha nos músculos do glúteo, formando um ângulo de 90 graus em relação ao membro pélvico do camundongo.</li>
+          <li data-n="6">Certifique o correto posicionamento da agulha puxando o êmbolo da seringa, qualquer sinal de sangue no canhão da agulha indica posicionamento incorreto.</li>
+          <li data-n="7">Administre a substância em um movimento contínuo e lento, pois injetar a substância de forma rápida pode causar trauma tecidual.</li>
+          <li data-n="8">Descarte a seringa e agulha em container apropriado para materiais perfurocortantes.</li>
+        </ol>
+      </div>
+      <div class="attention">
+        <div class="a-head">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 9v4M12 17h.01M10.3 3.9L2.7 17a1.7 1.7 0 0 0 1.5 2.6h15.6a1.7 1.7 0 0 0 1.5-2.6L13.7 3.9a1.7 1.7 0 0 0-3.4 0Z"/></svg>
+          ATENÇÃO
+        </div>
+        <p>Essa via de administração deve ser evitada no camundongo por causa da possibilidade de causar lesão muscular devido à musculatura muito pequena. Se necessário, a técnica deve ser realizada por pessoas bem treinadas, respeitando o volume máximo de 0,03 mL e com agulha de tamanho adequado.</p>
+      </div>
+      <div class="ref-note"><b>Referência:</b> SHIMIZU, Shinya. Routes of administration. The laboratory mouse, p. 527-541, 2004. DOI: 10.1016/B978-012336425-8</div>
+    </div>
+
+    <!-- ---- Técnica VIII: veia lateral da cauda ---- -->
+    <div class="technique">
+      <div class="technique-head">
+        <h4>Técnica VIII — Via intravenosa: veia lateral da cauda</h4>
+        <span class="tag">Aplicação</span>
+      </div>
+      <div class="tb-content">
+        <div class="mat-label">MATERIAIS</div>
+        <ul class="materials">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 11V6a2 2 0 0 1 4 0v5M11 11V4a2 2 0 0 1 4 0v7M15 11V6a2 2 0 0 1 4 0v9c0 3-2 6-6 6h-2c-3 0-5-1.5-6-4l-2-5a1.5 1.5 0 0 1 2.6-1.4L7 14"/></svg>Luvas descartáveis para procedimentos</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3l-3 2v16h14V5l-3-2M8 3l4 3 4-3M9 10h6"/></svg>Jaleco</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 5l-9 9M14 4l6 6M5 19l2-2M8 16l2 2M12 12l-6 6H4v-2l6-6"/></svg>Seringa de 1 mL ou seringa ultrafina de 0,3 ou 0,5 mL com agulha de 8×0,3 mm</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 3L5 17M7 15l2 2M3 21l4-2-2-4-2 6Z"/></svg>Agulha hipodérmica (calibre 26 a 30 G)</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 2h4v4l2 2v12a2 2 0 0 1-2 2h-4a2 2 0 0 1-2-2V8l2-2Z"/></svg>Álcool etílico 70%</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="5" width="14" height="14" rx="2"/><path d="M12 9v6M9 12h6"/></svg>Algodão ou gaze</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="7" width="16" height="13" rx="2"/><path d="M4 7l2-3h12l2 3M12 11v4M10 13h4"/></svg>Container para descarte de perfurocortantes</li>
+        </ul>
+        <div class="proc-label">PROCEDIMENTO</div>
+        <ol class="steps">
+          <li data-n="1">Preencha a seringa com o volume de substância apropriado segundo a dosagem.</li>
+          <li data-n="2">Com o camundongo anestesiado, irradie a luz infravermelha sobre a cauda até que se note dilatação suficiente das veias laterais caudais (3 a 5 minutos), atentando-se para que não ocorra aquecimento excessivo da região, evitando lesões ao animal. Mantenha a mão junto à cauda para percepção do calor. Alternativamente, envolva a cauda com algodão embebido em água aquecida para promover vasodilatação.</li>
+          <li data-n="3">Realize a antissepsia da área a ser administrada com álcool etílico 70%.</li>
+          <li data-n="4">Introduza a agulha ao menos 3 mm no lúmen da veia lateral da cauda, com o bisel voltado para cima, preferencialmente na porção distal da metade da cauda.</li>
+          <li data-n="5">Puxe o embolo da seringa fazendo uma leve pressão negativa até observar sangue no canhão da agulha.</li>
+          <li data-n="6">Empurre lentamente o embolo da seringa, em movimento contínuo, até injetar o volume total da substância e retire a agulha. A administração rápida pode causar ruptura do vaso.</li>
+          <li data-n="7">Realize a hemostasia por compressão com a gaze no local da punção.</li>
+          <li data-n="8">Descarte a seringa e agulha em container apropriado para materiais perfurocortantes.</li>
+        </ol>
+      </div>
+      <div class="ref-note"><b>Referência:</b> SHIMIZU, Shinya. Routes of administration. The laboratory mouse, p. 527-541, 2004. DOI: 10.1016/B978-012336425-8</div>
+    </div>
+
+  </div>
+
+  <footer>
+    <div class="wrap">
+      <span>Manual BPEA · Métodos de Aplicações</span>
+      <span class="foot-motto">REWIRE LAB · FIRE LAB — UFMG</span>
+    </div>
+  </footer>
+  </main>
+
+    <script src="../shared/menu.js"></script>
+</body>
+</html>
