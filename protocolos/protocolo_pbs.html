@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Protocolos Soluções — Tampão Fosfato-Salina (PBS)</title>
+<link rel="stylesheet" href="../css/style.css">
+<style>
+  :root{
+    --navy-950:#0A1F3D;
+    --navy-800:#123A6B;
+    --blue-700:#1B5DA6;
+    --blue-500:#2E7FD6;
+    --blue-300:#7FB1E8;
+    --blue-100:#EAF3FC;
+    --blue-050:#F5FAFF;
+    --white:#FFFFFF;
+    --ink:#12213B;
+    --ink-soft:#3F5673;
+    --line:#CBDDF2;
+    --step-line:#AECBEB;
+  }
+
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--white);
+    color:var(--ink);
+    font-family:'Liberation Sans','Helvetica Neue',Arial,sans-serif;
+    line-height:1.55;
+    font-size:16px;
+  }
+  h1,h2,h3,h4{
+    font-family:'Liberation Sans','Helvetica Neue',Arial,sans-serif;
+    font-weight:700;
+    letter-spacing:-0.01em;
+    color:var(--navy-950);
+    margin:0;
+  }
+  .wrap{max-width:1000px;margin:0 auto;padding:0 32px;}
+  .page{flex:1;min-width:0;display:flex;flex-direction:column;}
+  .page footer{margin-top:auto;}
+
+  /* ---------- CAPA ---------- */
+  .cover{
+    background:
+      radial-gradient(circle at 85% 12%, rgba(255,255,255,0.10), transparent 42%),
+      linear-gradient(165deg, var(--navy-950) 0%, var(--navy-800) 52%, var(--blue-700) 100%);
+    color:var(--white);
+    padding:64px 0 48px;
+    position:relative;
+    overflow:hidden;
+  }
+  .cover::before{
+    content:"";
+    position:absolute;
+    right:-140px; top:-140px;
+    width:420px; height:420px;
+    border-radius:50%;
+    border:1.5px solid rgba(255,255,255,0.14);
+  }
+  .cover::after{
+    content:"";
+    position:absolute;
+    right:-40px; top:120px;
+    width:260px; height:260px;
+    border-radius:50%;
+    border:1.5px solid rgba(255,255,255,0.10);
+  }
+  .cover-inner{position:relative; z-index:1;}
+  .kicker{
+    display:flex; align-items:center; gap:10px;
+    font-size:13px; letter-spacing:.04em; color:var(--blue-300);
+    margin-bottom:22px;
+  }
+  .kicker .dot{width:6px;height:6px;border-radius:50%;background:var(--blue-300);}
+  .cover h1{
+    font-size:34px; font-weight:800; line-height:1.16;
+    max-width:760px; color:var(--white);
+  }
+  .cover .sigla{
+    display:inline-block; margin-top:16px;
+    font-size:15px; font-weight:600; color:var(--blue-100);
+    border-left:3px solid var(--blue-300); padding-left:12px;
+  }
+  .cover .motto{
+    margin-top:32px; padding-top:20px; border-top:1px solid rgba(255,255,255,0.18);
+    font-size:14px; font-style:italic; color:var(--blue-300);
+  }
+
+  /* ---------- SECTION HEADER ---------- */
+  .section-header{
+    padding:40px 0 6px;
+    display:flex; align-items:baseline; gap:14px;
+  }
+  .section-header .idx{
+    font-family:'Liberation Sans',Arial,sans-serif;
+    font-size:14px; font-weight:700; color:var(--blue-500);
+    border:1.5px solid var(--blue-300); border-radius:20px;
+    padding:3px 12px;
+  }
+  .section-header h3{
+    font-size:22px; font-weight:700; color:var(--navy-800);
+  }
+
+  /* ---------- CARD ---------- */
+  .technique{
+    margin:26px 0 30px;
+    border:1px solid var(--line);
+    border-radius:14px;
+    overflow:hidden;
+    background:var(--white);
+  }
+  .technique-head{
+    background:linear-gradient(90deg, var(--navy-800), var(--blue-700));
+    color:var(--white);
+    padding:16px 24px;
+    display:flex; align-items:center; justify-content:space-between; gap:16px;
+  }
+  .technique-head h4{
+    color:var(--white); font-size:17px; font-weight:700;
+  }
+  .technique-head .tag{
+    font-size:12px; font-weight:600; color:var(--blue-100);
+    background:rgba(255,255,255,0.14);
+    border-radius:20px; padding:4px 12px; white-space:nowrap;
+  }
+  .tb-content{padding:22px 26px 26px;}
+  .tb-content p{margin:0 0 14px; font-size:15px; color:var(--ink);}
+  .tb-content p:last-child{margin-bottom:0;}
+
+  /* ---------- EQUAÇÕES ---------- */
+  .equation{
+    margin:14px 0;
+    padding:14px 18px;
+    background:var(--blue-050);
+    border:1px solid var(--line);
+    border-radius:8px;
+    font-size:16.5px;
+    text-align:center;
+    color:var(--navy-800);
+    white-space:nowrap;
+    overflow-x:auto;
+  }
+  .equation .eq-tag{
+    display:inline-block; font-size:11px; font-weight:700; color:var(--blue-500);
+    margin-left:10px;
+  }
+  .equation sub, .equation sup{font-size:11px;}
+  .frac{
+    display:inline-block; vertical-align:middle; text-align:center;
+    margin:0 4px;
+  }
+  .frac span{display:block; padding:0 6px;}
+  .frac span:first-child{border-bottom:1.5px solid var(--navy-800);}
+
+  /* ---------- TABELA ---------- */
+  table.data{
+    width:100%;
+    border-collapse:collapse;
+    font-size:13.3px;
+  }
+  table.data th, table.data td{
+    border:1px solid var(--line);
+    padding:9px 10px;
+    text-align:center;
+  }
+  table.data thead th{
+    background:var(--navy-800);
+    color:var(--white);
+    font-weight:700;
+    font-size:12px;
+    letter-spacing:.02em;
+  }
+  table.data thead tr.sub th{
+    background:var(--blue-700);
+    font-weight:600;
+    font-size:11.3px;
+  }
+  table.data td.reag{
+    text-align:left;
+    font-weight:700;
+    color:var(--navy-800);
+    background:var(--blue-050);
+    white-space:nowrap;
+  }
+  table.data td.dose{
+    font-weight:700;
+    color:var(--blue-700);
+    white-space:nowrap;
+  }
+
+  /* ---------- PROCEDIMENTO ---------- */
+  .proc-label{
+    font-size:12px; font-weight:700; color:var(--blue-700);
+    letter-spacing:.03em; margin:18px 0 12px;
+  }
+  .proc-label:first-child{margin-top:0;}
+  .steps{list-style:none; margin:0; padding:0; position:relative;}
+  .steps li{
+    position:relative;
+    padding-left:34px; padding-bottom:16px;
+    font-size:14.5px; color:var(--ink);
+  }
+  .steps li:last-child{padding-bottom:0;}
+  .steps li::before{
+    content:attr(data-n);
+    position:absolute; left:0; top:0;
+    width:22px; height:22px; border-radius:50%;
+    background:var(--blue-100); color:var(--blue-700);
+    border:1.5px solid var(--blue-300);
+    font-family:'Liberation Sans',Arial,sans-serif; font-weight:700; font-size:12px;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .steps li::after{
+    content:"";
+    position:absolute; left:11px; top:23px; bottom:0;
+    width:1.5px; background:var(--step-line);
+  }
+  .steps li:last-child::after{display:none;}
+
+  /* ---------- NOTAS ---------- */
+  .attention{
+    margin:0 0 24px;
+    border:1.5px solid var(--blue-700);
+    border-left:5px solid var(--navy-950);
+    background:var(--blue-050);
+    border-radius:8px;
+    padding:14px 18px;
+  }
+  .attention .a-head{
+    display:flex; align-items:center; gap:8px;
+    font-family:'Liberation Sans',Arial,sans-serif; font-size:13px; font-weight:800;
+    color:var(--navy-950); letter-spacing:.03em; margin-bottom:8px;
+  }
+  .attention .a-head svg{width:16px;height:16px;color:var(--navy-950);}
+  .attention p{margin:4px 0; font-size:13.5px; color:var(--ink-soft);}
+  .attention p b{color:var(--ink);}
+
+  .divider{
+    height:1px; background:var(--line); margin:0;
+  }
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    background:var(--navy-950); color:var(--blue-100);
+    padding:30px 0; margin-top:20px;
+    font-size:13px;
+  }
+  footer .wrap{display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;}
+  footer .foot-motto{color:var(--blue-300); font-style:italic;}
+</style>
+</head>
+<body>
+    <aside id="sidebar-menu"></aside>
+
+  <main class="page">
+
+
+  <!-- ===================== CAPA ===================== -->
+  <section class="cover">
+    <div class="wrap cover-inner">
+      <div class="kicker"><span class="dot"></span>PROTOCOLO DE SOLUÇÕES</div>
+      <h1>Preparação do Tampão Fosfato-Salina (PBS)</h1>
+      <div class="sigla">Phosphate Buffer Solution — 1X (0,1 M) e 5X</div>
+      <div class="motto">"Neurons that FIRE together, (RE)WIRE together."</div>
+    </div>
+  </section>
+
+  <div class="wrap">
+
+    <!-- ============ SEÇÃO: FUNDAMENTO ============ -->
+    <div class="section-header">
+      <span class="idx">1.1</span>
+      <h3>Do Tampão</h3>
+    </div>
+
+    <div class="technique">
+      <div class="technique-head">
+        <h4>Fundamento químico</h4>
+        <span class="tag">PBS · Phosphate Buffer Solution</span>
+      </div>
+      <div class="tb-content">
+        <p>O PBS é uma solução aquosa de ácidos fracos e suas bases conjugadas, mantida em pH estável. Os sais de fosfato contribuem com os íons dihidrogenofosfato e hidrogenofosfato, e o cloreto de sódio mantém a força iônica da solução.</p>
+        <div class="equation">H<sub>2</sub>PO<sub>4</sub><sup>−</sup><sub>(aq)</sub> &#8652; H<sup>+</sup><sub>(aq)</sub> + HPO<sub>4</sub><sup>2−</sup><sub>(aq)</sub><span class="eq-tag">eq. 1</span></div>
+        <div class="equation">Ka = <span class="frac"><span>[H<sup>+</sup>][HPO<sub>4</sub><sup>2−</sup>]</span><span>[H<sub>2</sub>PO<sub>4</sub><sup>−</sup>]</span></span> &nbsp;e&nbsp; pH = pKa + log <span class="frac"><span>[HPO<sub>4</sub><sup>2−</sup>]</span><span>[H<sub>2</sub>PO<sub>4</sub><sup>−</sup>]</span></span><span class="eq-tag">eq. 2 e eq. 3</span></div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- ============ SEÇÃO: PREPARO ============ -->
+    <div class="section-header">
+      <span class="idx">1.2</span>
+      <h3>Do Preparo</h3>
+    </div>
+
+    <div class="technique">
+      <div class="technique-head">
+        <h4>Pesagem dos reagentes</h4>
+        <span class="tag">1X (0,1 M) · 5X</span>
+      </div>
+      <div class="tb-content">
+        <table class="data">
+          <thead>
+            <tr>
+              <th rowspan="2">Reagente</th>
+              <th>1X (0,1 M)</th>
+              <th>5X</th>
+            </tr>
+            <tr class="sub">
+              <th>Solução de uso</th>
+              <th>Solução estoque</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="reag">Na<sub>2</sub>HPO<sub>4</sub></td>
+              <td class="dose">11,24 g</td>
+              <td class="dose">56,20 g</td>
+            </tr>
+            <tr>
+              <td class="reag">NaH<sub>2</sub>PO<sub>4</sub></td>
+              <td class="dose">2,83 g</td>
+              <td class="dose">14,15 g</td>
+            </tr>
+            <tr>
+              <td class="reag">NaCl</td>
+              <td class="dose">9,00 g</td>
+              <td class="dose">45,00 g</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="technique">
+      <div class="technique-head">
+        <h4>Protocolo de preparação do PBS</h4>
+        <span class="tag">Protocolo</span>
+      </div>
+      <div class="tb-content">
+        <div class="proc-label">PROCEDIMENTO</div>
+        <ol class="steps">
+          <li data-n="1">Pesar os reagentes segundo a tabela acima (os valores de "X" dizem respeito a 1 L).</li>
+          <li data-n="2">Dissolver as massas de sais em aproximadamente 1 L (1000 mL) de água destilada, em temperatura ambiente, sob agitação constante. Use o agitador magnético ("pulga" ou "baiarina").</li>
+        </ol>
+      </div>
+      <div class="attention">
+        <div class="a-head">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 9v4M12 17h.01M10.3 3.9L2.7 17a1.7 1.7 0 0 0 1.5 2.6h15.6a1.7 1.7 0 0 0 1.5-2.6L13.7 3.9a1.7 1.7 0 0 0-3.4 0Z"/></svg>
+          OBSERVAÇÕES
+        </div>
+        <p>Dissolver primeiro as massas maiores.</p>
+        <p>Para obter a <b>solução de uso (1X)</b> a partir da <b>solução estoque (5X)</b>, dilua em água destilada — p. ex.: 200 mL de 5X + 800 mL de H<sub>2</sub>O = 1000 mL de 1X.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <footer>
+    <div class="wrap">
+      <span>Protocolos Soluções · Tampão Fosfato-Salina (PBS)</span>
+      <span class="foot-motto">REWIRE LAB · FIRE LAB — UFMG</span>
+    </div>
+  </footer>
+  </main>
+
+    <script src="../shared/menu.js"></script>
+</body>
+</html>

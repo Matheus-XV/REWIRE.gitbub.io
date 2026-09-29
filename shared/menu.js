@@ -17,6 +17,12 @@ const menuData = [
       { nome: "Analgesia animal", path: "BPEA/BPEA_analgesia_animal.html" },
       { nome: "Métodos de Aplicações", path: "BPEA/BPEA_metodos_aplicacoes.html" }
     ]
+  },
+  {
+    titulo: "PROTOCOLOS SOLUÇÕES",
+    paginas: [
+      { nome: "Tampão Fosfato-Salina (PBS)", path: "protocolos/protocolo_pbs.html" }
+    ]
   }
 ];
 
